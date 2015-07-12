@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>User Name Entry Test </p>
+<button onclick="myFunction()">Enter user  name </button>
+<form name="form1">
+
+<input type="text" id="user" name="username" readonly="true">
+</form>
+<script>
+
+
+function myFunction() {
+    var username = prompt("Please enter name ", "")        
+     document.getElementById('user').value=username;
+
+}
+</script>
+
+</body>
+</html>

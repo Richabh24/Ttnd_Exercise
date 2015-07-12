@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Palindrom String Test </p>
+
+<button onclick="myFunction()">Check Palindrom String </button>
+
+<p id="demo"></p>
+
+<script>
+var isPalindrome = function (string) {
+    if (string == string.split('').reverse().join('')) {
+        alert(string + ' is palindrome.');
+    }
+    else {
+        alert(string + ' is not palindrome.');
+    }
+}
+
+
+function myFunction() {
+    var paldstring = prompt("Please enter String ", "")        
+          isPalindrome(paldstring);
+    
+}
+</script>
+
+</body>
+</html>

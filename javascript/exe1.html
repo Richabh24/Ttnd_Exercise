@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to demonstrate the prompt box.</p>
+
+<button onclick="myFunction()">Calculate Simple Interest</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var amount = prompt("Please enter amount", "");
+    var interestrate = prompt("Please enter Interest Rate", "");
+    var noofyear = prompt("Please enter NO of Year", "");
+    if (amount != null&&interestrate!=null&&noofyear!=null) {
+p=parseInt(amount);
+ r=parseInt(interestrate); 
+ n=parseInt(noofyear); 
+ i=(p*r*n)/100;
+
+
+        document.getElementById("demo").innerHTML =
+        "Simple Interest = Rs : "+i;
+    }
+}
+</script>
+
+</body>
+</html>

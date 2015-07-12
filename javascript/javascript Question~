@@ -1,0 +1,12 @@
+1) Prompt for amount, interest rate and no. of years and calculate simple interest. 
+2) is palindrome string 
+3) Area of circle 
+
+Exercises Using Form 
+
+4) On click of a button ask for the name of user and display it inside the text box 
+5) Copy text of one text field to another on change of text in first text box 
+6) Allow submission of form only if the user has entered his name(not empty) and age is greater than or equals to 18 
+7) Change color of the div when mouse is moved over it and restore the color when mouse moves out of it 
+8) Externalize java Script file in previous exercises.
+

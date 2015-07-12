@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+<script>
+
+
+function myFunction() {
+     var name=document.getElementById('user1').value
+   var age =  document.getElementById('age').value;
+
+   if(name==null||name==''){
+alert("Missing user name!");
+	return false;
+
+   }
+if(age==null||age==''){
+alert("Missing user age!");
+	return false;
+
+   }else{
+if(age!=null && age<18){
+	alert("Age must be greater than or equal to 18");
+	return false;
+
+}
+
+   }
+ document.getElementById("valuetest").innerHTML =
+        " user name : "+name+" Age :"+age;
+
+return true;
+
+}
+</script>
+
+</head>
+
+<body>
+
+<p>Form submission </p>
+<form name="myForm" action="welcome.html" onsubmit="return myFunction()" method="post">
+Name <input type="text" id="user1" name="username1"  />
+Age <input type="text" id="age" name="age" />
+  <button type="submit"> Submit</button>
+
+</form>  <div id="valuetest"></div>
+
+</body>
+</html>
+
