@@ -1,0 +1,154 @@
+Question :-  http://jqexercise.droppages.com/
+
+1)
+
+ $("#target").css("background-color", "yellow"); 
+
+2)
+ $("#target span").text("fewfwefwe"); 
+
+3)$( "#target span" ).clone().appendTo( "#target" );
+4)$( ".target:eq(2)" ).css("background-color", "yellow"); 
+5    $("input[type=submit]").attr("disabled", "disabled");
+6)$('.target input').removeAttr('checked');
+7) $("#parent1 #child").appendTo("#parent2"); 
+8) $('#target input').attr('readonly', true);
+9)$('select>option:eq(1)').attr('selected', true);
+10)
+var target =$('#target')
+target.css({
+height:target.height()*2,
+width:target.width()*2
+})
+
+11)$("#target").empty();
+12)
+setTimeout(function(){
+alert("Alert display!")
+
+},1000);
+
+13)alert($('#target').find('.child').size());
+14)var target = $('#target')
+target.animate(
+{
+width:target.width()*2,
+height:target.height()*2
+},100
+)
+
+15)$('#target option').filter(':odd').css('background', '#DDD');
+16)var target =$('#target')
+target.html(target.html().replace(/h2/g,'h3'));
+
+
+17)$('#target').html($('#target').html().replace(/cat/g,'dog'));
+18)$('#target').children().not('h2').remove();
+19)$('.target').not(':parent').remove();
+20)var options = {
+ };
+$('#target option').each(function(i){
+  var option = $(this);
+options[option.text()] = option;
+});
+var keys = Object.keys(options).sort();
+var select = $('#target select').empty();
+$.each(keys, function(i, key){
+  select.append(options[key]);
+});
+
+21)
+var showDialog = function(){
+ if(confirm('Confirm Again?')){
+ showDialog();
+}};
+showDialog();
+
+22)var countup = function(){
+ var count = parseInt($('#target :text').val());
+$('#target :text').val(++count);
+setTimeout(countup, 1000);
+};
+countup();
+23)var target=$('#target');
+target.html(target.html().replace(/red/,"<span style='color:red'>$&</span>").replace(/blue/,"<span style='color:blue'>$&</span>").replace(/green/,"<span style='color:green'>$&</span>"));
+24)$('#target :text').each(function(){
+  var textBox = $(this);
+if(textBox.val().match(/[^0-9]/)){
+  textBox.css('border-color','red');
+} else {
+  textBox.css('border-color','green');
+}});
+25)
+
+var tr = $('#target table tr');
+tr.eq(0).insertAfter(tr.eq(1));
+26)
+$('#target tr').each(function(i){
+  if(i==0)return true;
+var tr = $(this);
+var num1 = parseInt($('td', tr).eq(0).text());
+var num2 = parseInt($('td', tr).eq(2).text());
+$('td', tr).eq(4).text(num1 + num2);
+});
+
+27)
+
+$('#target td').each(function(i){
+  var td = $(this);
+if (parseInt(td.text()) > 10){
+ td.css('background', '#E34');
+};
+});
+
+28)var i = 0;
+var changeColor = function(){
+  var color = (++i%2 == 0)?'#EEE':'#fff0001';
+$('#target').css('background', color);
+setTimeout(changeColor, 400);
+};
+changeColor();
+
+29)var ht = $('#target').html();
+ ht=ht.replace('bold',"$&".bold());
+ $('#target').html(ht);
+
+
+30)
+
+var table = $('#target table');
+var rows = [];
+$('tr', table).each(function(){
+  var tr = $(this);
+var cells = [];
+$('td,th', tr).each(function(){
+  cells.push($(this));
+});
+rows.push(cells);
+});
+for(var colNum=0;
+colNum<rows[0].length;
+colNum++){
+  var tr = $('<tr/>').appendTo(table);
+$.each(rows,function(i, row){
+  row[colNum].appendTo(tr);
+});
+};
+$('tr:empty', table).remove();
+
+31)
+
+
+var before = $('#target :text').val();
+var after = '';
+for (var i=before.length;
+i>=0;
+i--){
+ var s = before.substring(i, i+1);
+if (s.match(/^[0-9]/) && after.match(/^[0-9]{
+ 3}/)) {
+ after = s + ',' + after;
+} else {
+ after = s + after;
+}};
+$('#target :text').val(after);
