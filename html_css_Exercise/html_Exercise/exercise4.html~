@@ -1,0 +1,32 @@
+<html>
+<body bgcolor="#E6E6FA"><div style="width:300;height:400;margin:0 auto; border:1px solid #000"> <form >
+Name:<br>
+<input type="text" name="firstname">
+<br>
+Email:<br>
+<input type="text" name="lastname">
+<br> 
+
+<input type="checkbox" checked> Subscribe to the news Letter
+<br>
+Formate of the Email<br>
+<input type="radio" name="formate" value="HTML" checked>HTML
+<br>
+<input type="radio" name="formate" value="pt">Plain Text
+<br>
+
+Type Of Subscription
+<br>
+ <select>
+  <option value="type1">Standard-Free</option>
+  <option value="type2">type2</option>
+  <option value="type3">type3</option>
+  <option value="type4">type4</option>
+</select><br>
+Comment to the Editor<br>
+ <textarea rows="4" cols="35">
+</textarea> 
+
+<br>  <button type="submit" form="form1" value="Submit">Submit</button> 
+</form></div></body>
+</html

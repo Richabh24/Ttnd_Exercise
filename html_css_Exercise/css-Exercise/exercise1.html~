@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<HEAD>
+ <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+
+<title>
+Example1
+</title>
+</HEAD>
+
+<BODY >
+<div align="center">
+<form id="sample" method="post" >
+<table align="center">
+
+<tr >
+<th ><b>Item name</b>
+</th>
+<th><b>Price</b></th></tr>
+<tr>
+<td >Laptop
+</td>
+<td >22,000</td></tr>
+<tr>
+<td>Monitor
+</td>
+<td >10,200</td></tr>
+<tr>
+<td >Printer
+</td>
+<td >7,100</td></tr>
+</table>
+
+</form></div>
+</BODY>
+</html>
+
+
+
+
+
