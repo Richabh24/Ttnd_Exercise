@@ -1,14 +1,28 @@
+import groovy.io.FileType
+class FileExample {
+   static void main(String[] args) {        
+      def list = []
+      String filepath='/home/ttnd/Desktop/file'
+def dir = new File("/home/ttnd/Desktop/file")
+dir.eachFileRecurse (FileType.FILES) { file ->
+  list.add(file)
+}
+def file = new File(filepath,'/newfile.txt')
+if( !file.exists() ) {
+    file.createNewFile()    
+} 
+  file.withWriterAppend { w ->
+list.each { f ->
+
+    new File('', f ).withReader { r ->
 
 
-class FileExample1 {
-   static void main(String[] args) {
-   (1..3).each{
-   def file = new File("file$it")  
-file << "Sample content for ${file.absolutePath}"}
-def f1 =new File("/home/ttnd/Desktop/f1.txt");
-      new File("/home/ttnd/Desktop/file").eachFile() { file->
-         f1<< new File(file.getAbsolutePath())
-         println f1
-      }
+     w << r << '\n'
+   }
+  }
+  println "file created succesfully:-)"
+}
+     
+     
    }
 }
