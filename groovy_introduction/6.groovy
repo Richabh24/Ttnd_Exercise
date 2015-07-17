@@ -1,21 +1,31 @@
-class HourMinute{
-int hours;
-int minute;
-HourMinute(){}
-HourMinute(int hours,int minute){
-this.hours =hours;
-this.minute =minute;
+class HourMinute {
+
+int hour
+int minute
+
+       
+
+  HourMinute plus(HourMinute hm) {
+        new HourMinute(hour: hour+hm.hour, minute: minute +hm.minute)
+    }
+ 
+ 
+ String toString(){
+ return "hour : $hour , minute :$minute "
+ 
+ }
 }
 
-}
+static main(ARGS){
+ 
+HourMinute hm =new HourMinute(hour:7,minute:10)
 
-static  main(ARGS){
-     
-  HourMinute js = new HourMinute(10,5);
-  HourMinute j1 = new HourMinute(5,5);
-  HourMinute j2 =js+j1
-  println j2.hours;
-
-     }
-
-
+HourMinute hm1 =new HourMinute(hour:40,minute:10)
+    
+   HourMinute hhh =hm +hm1 
+    
+    
+    println (hhh)
+    
+    
+    }
