@@ -2,8 +2,11 @@ import groovy.io.FileType
 class FileExample {
    static void main(String[] args) {        
       def list = []
-      String filepath='/home/ttnd/Desktop/file'
-def dir = new File("/home/ttnd/Desktop/file")
+String filepath='/home/ttnd/Desktop/file'
+def dir = new File(filepath)
+if(!dir.exists()){
+  dir.mkdirs()
+}
 dir.eachFileRecurse (FileType.FILES) { file ->
   list.add(file)
 }
