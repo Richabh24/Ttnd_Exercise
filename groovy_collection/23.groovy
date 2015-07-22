@@ -31,13 +31,13 @@ li.add(e)
 
 //b
  
-//println li.countBy { it.DepartmentName}
+println li.countBy { it.DepartmentName}
  //c
  List lesssalary=li.findAll{emp->
  emp.age>18 && emp.age<35
  }
  lesssalary.each{
-//println  "Employees whose age is between 18 and 35 ---->"+ it.Name +" " + it.Salary+" "+ it.Age
+println  "Employees whose age is between 18 and 35 ---->"+ it.Name +" " + it.Salary+" "+ it.Age
 }
 
 
@@ -49,5 +49,4 @@ def result =li.groupBy({it.name[0]})
 result.each{
 print "------------------->-$it"
 }
-
 
