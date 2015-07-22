@@ -41,12 +41,7 @@ println  "Employees whose age is between 18 and 35 ---->"+ it.Name +" " + it.Sal
 }
 
 
-
 //d
-
-def result =li.groupBy({it.name[0]})
-
-result.each{
-print "------------------->-$it"
-}
+ result =li.groupBy({it.name[0]})
+print result
 
