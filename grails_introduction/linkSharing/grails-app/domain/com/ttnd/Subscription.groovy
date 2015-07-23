@@ -6,5 +6,7 @@ class Subscription {
     Date createdDate
     ConstantEnum.Seriousness seriousness
     static constraints = {
+        topic(unique: ['user'])
+
     }
 }

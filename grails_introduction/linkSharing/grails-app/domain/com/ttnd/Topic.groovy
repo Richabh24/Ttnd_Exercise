@@ -9,6 +9,6 @@ class Topic {
     ConstantEnum.Visibility visibility
     static  hasMany = [resourceavailable:Resource]
     static constraints = {
-       // name(unique: ['createdBy'])
+       name(unique: ['createdBy'])
     }
 }
