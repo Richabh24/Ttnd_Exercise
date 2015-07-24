@@ -3,6 +3,7 @@ import com.ttnd.DocumentResource
 import com.ttnd.LinkResource
 import com.ttnd.ReadingItem
 import com.ttnd.Resource
+import com.ttnd.ResourceRating
 import com.ttnd.Subscription
 import com.ttnd.Topic
 import com.ttnd.User
@@ -57,32 +58,33 @@ class BootStrap {
     }
     void createLinkResource(Topic topic,User user){
         (1..5).each {
-            LinkResource lresource = new LinkResource(url: 'http://www.google.com',topic:topic,createdBy:user,title: "LinkResource title $it",description: "Demo test for first title$it")
+            Resource lresource = new LinkResource(url: 'http://www.google.com',topic:topic,createdBy:user,title: "LinkResource title $it",description: "Demo test for first title$it")
             lresource.validate()
             lresource.save(flush: true, failOnError: true)
+            createRatings(user,lresource)
 
         }
     }
 
 void createDocumentResource(Topic topic,User user){
     (1..5).each {
-        DocumentResource dresource = new DocumentResource(filePath: "/home/ttnd/Desktop/assignment2.txt",topic:topic,createdBy:user,title: "Document resource Title $it",description: "Demo test for first title$it")
+        Resource dresource = new DocumentResource(filePath: "/home/ttnd/Desktop/assignment2.txt",topic:topic,createdBy:user,title: "Document resource Title $it",description: "Demo test for first title$it")
         dresource.validate()
         dresource.save(flush: true, failOnError: true)
+        createRatings(user,dresource)
 
     }
 
 
 }
-        void createReadingItems(User user1){
-
+        void createReadingItems(User user1)
+            {
             Random rand = new Random()
             int max = 10
             (1..3).each {
                 long num =rand.nextInt(max+1)
                 if (num==0) { num =1}
              Resource resource = Resource.findById(num)
-                print "$num ------- $resource----$user1"
                 ReadingItem r =new ReadingItem(user:user1,resource: resource,isRead: true)
                 r.validate()
                 r.save(flush: true, failOnError: true)
@@ -92,6 +94,17 @@ void createDocumentResource(Topic topic,User user){
 
 
     }
+    void createRatings(User user1,Resource resource)
+    {
+
+            ResourceRating rating=new ResourceRating(user:user1,resource: resource,score: 5)
+        rating.validate()
+        rating.save(flush: true, failOnError: true)
+        }
+
+
+
+
 
     void subscribeTopic(Topic topic,User user){
         Subscription subsctopic = new Subscription(user:user,topic:topic,seriousness: ConstantEnum.Seriousness.SERIOUS)
