@@ -4,8 +4,8 @@ import javax.xml.soap.Text
 
 class Resource {
     String title
-    Text description
-    Date createdDate
+    String description
+    Date dateCreated
     Date lastUpdated
     Topic topic
     User createdBy
@@ -13,14 +13,14 @@ class Resource {
 
 static  mapping = {
 
-description column: 'summary'
+    description column: 'summary'
+    description type: "text"
 }
 
 
-    static  belongsTo = [topics:Topic]
+    //static  belongsTo = [topic:Topic]
     static constraints = {
         title(unique: ['topic'])
-
         description size:1..1024
     }
 }

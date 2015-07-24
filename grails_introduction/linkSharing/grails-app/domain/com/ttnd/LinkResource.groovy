@@ -1,8 +1,11 @@
 package com.ttnd
 
-class LinkResource {
+class LinkResource extends Resource {
     String url
+    static mapping = {
+        tablePerHierarchy false
+    }
     static constraints = {
-        url  url: true
+        url  url: true ,blank: true,nullable: true
     }
 }
