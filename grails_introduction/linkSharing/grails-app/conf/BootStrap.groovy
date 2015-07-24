@@ -12,17 +12,6 @@ import java.util.Random
 class BootStrap {
 
     def init = { servletContext ->
-
-      /*  User user = new User(name:'testtt1',address: 'test1address',password: '123456')
-        println user.validate();
-        user.save(flus:true,failOnError: true)
-         user = new User(name:'testtt1',address: 'test1address',password: 'testtt1')
-        println user.validate();
-        user.save(flus:true,failOnError: true)
-*/
-
-
-
         createUser()
 
     }
@@ -56,6 +45,7 @@ class BootStrap {
         createDocumentResource(topic,user)
        createReadingItems(user)
     }
+
     void createLinkResource(Topic topic,User user){
         (1..5).each {
             Resource lresource = new LinkResource(url: 'http://www.google.com',topic:topic,createdBy:user,title: "LinkResource title $it",description: "Demo test for first title$it")
@@ -97,7 +87,7 @@ void createDocumentResource(Topic topic,User user){
     void createRatings(User user1,Resource resource)
     {
 
-            ResourceRating rating=new ResourceRating(user:user1,resource: resource,score: 5)
+        ResourceRating rating=new ResourceRating(user:user1,resource: resource,score: 5)
         rating.validate()
         rating.save(flush: true, failOnError: true)
         }
