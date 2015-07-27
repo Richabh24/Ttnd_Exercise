@@ -18,6 +18,7 @@ static  hasMany = [subscibedTopic:Topic, createdTopics :Topic]
     static  constraints = {
 
         email email: true, blank: false,nullable: false,unique: true
+        userName unique: true
         photo blank:true,nullable: true
 
     }
