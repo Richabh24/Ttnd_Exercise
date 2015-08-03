@@ -1,98 +1,108 @@
-import com.ttnd.ConstantEnum
 import com.ttnd.DocumentResource
 import com.ttnd.LinkResource
-import com.ttnd.ReadingItem
-import com.ttnd.Resource
 import com.ttnd.ResourceRating
-import com.ttnd.Subscription
 import com.ttnd.Topic
 import com.ttnd.User
-import java.util.Random
 
 class BootStrap {
 
     def init = { servletContext ->
-        createUser()
+        createUsers()
 
     }
+    void  createUsers(){
 
-    void createUser(){
+        List<User> users = new ArrayList<User>();
+        User user1 =new User(email: 'rbhadani24@gmail.com',firstName: 'richa',lastName: 'bhadani',password: 'r243611',username: 'richa',admin: true,photo:new FileInputStream(new File("/home/ttnd/Desktop/images/pic1.jpeg")).getBytes())
+        User  user2 =new User(email: 'test@gmail.com',firstName: 'chitra',lastName: 'gupta',password: 'r242611',username: 'chitra',admin: false,photo:new FileInputStream(new File("/home/ttnd/Desktop/images/pic2.jpeg")).getBytes())
 
-        User user1= new User(userName: 'Priya',email: 'priya@gmail.com',firstName: 'priya',lastName: 'bhadani',admin:false,password: 'abcde',active: true)
-        user1.validate()
-        createTopics(user1)
-        user1= new User(userName: 'richa',email: 'richa@gmail.com',firstName: 'richa',lastName: 'bhadani',admin:true,password: 'abcde',active: true)
-        user1.validate()
-        createTopics(user1)
+        users.add(user1)
+        users.add(user2)
+
+
+        users.each {u ->
+            u.save(failOnError: true)
+            createTopics(u)
+            u.save(failOnError: true)
+        }
+
+
+
 
 
     }
-    void createTopics(User user){
-        (1..5).each {
-            Topic topic = new Topic(name: "Test$it",createdBy: user,visibility: ConstantEnum.Visibility.PUBLIC)
-            topic.validate()
-            user.addToCreatedTopics(topic)
-            user.save(flush: true,failOnError: true)
-            subscribeTopic(topic,user)
-           createResource(topic,user)
+   void createTopics(User u){
+
+       5.times { i->
+           // println(i)
+           Topic t =    new Topic(createdBy: u, name: "Power Test:  ${i}", visibility: Topic.VisibilityEnum.PUBLIC)
+           t.save(failOnError: true)
+           createResources(t,u) ;
+           u.addToTopics(t)
+          // createReadingItems(u)
+
+       }
+
+
+   }
+    void createResources(Topic t,User u){
+
+
+        5.times{j->
+            LinkResource lr = new LinkResource(title: "titleResource${j}",url:"http://www.google.com",topic: t,description: " You greatest power is your capacity to choose."
+                    ,createdBy: u)
+            lr.title="titleResource${j}"
+            lr.save(failOnError: true)
+            createRatings(u,lr,null);
+            t.addToResources(lr)
+
+        }
+        5.times{j->
+            DocumentResource dr = new DocumentResource(title: "titleDocumentResource${j}",filePath: "/type/path",fileType: "img", topic: t,description: "DocResource${j}"
+                    ,createdBy: u)
+            dr.title="titleDocResource${j}"
+
+            dr.save(failOnError: true)
+            createRatings(u,null,dr);
+
+            t.addToResources(dr)
 
         }
 
+
     }
-
-    void createResource(Topic topic,User user){
-        createLinkResource(topic,user)
-        createDocumentResource(topic,user)
-       createReadingItems(user)
-    }
-
-    void createLinkResource(Topic topic,User user){
-        (1..5).each {
-            Resource lresource = new LinkResource(url: 'http://www.google.com',topic:topic,createdBy:user,title: "LinkResource title $it",description: "Demo test for first title$it")
-            lresource.validate()
-            lresource.save(flush: true, failOnError: true)
-            createRatings(user,lresource)
-
+    void createRatings(User u,LinkResource lr,DocumentResource dr){
+        if(lr!=null) {
+            ResourceRating resourceRating1 = new ResourceRating(user: u, resource: lr, score: 2)
+            resourceRating1.save(flush: true, failOnError: true)
+            lr.addToResourceRatings(resourceRating1)
+            lr.merge(flush: true)
         }
-    }
+        if(dr!=null) {
 
-void createDocumentResource(Topic topic,User user){
-    (1..5).each {
-        Resource dresource = new DocumentResource(filePath: "/home/ttnd/Desktop/assignment2.txt",topic:topic,createdBy:user,title: "Document resource Title $it",description: "Demo test for first title$it")
-        dresource.validate()
-        dresource.save(flush: true, failOnError: true)
-        createRatings(user,dresource)
-
-    }
-
-
-}
-        void createReadingItems(User user1)
-            {
-            Random rand = new Random()
-            int max = 10
-            (1..3).each {
-                long num =rand.nextInt(max+1)
-                if (num==0) { num =1}
-             Resource resource = Resource.findById(num)
-                ReadingItem r =new ReadingItem(user:user1,resource: resource,isRead: true)
-                r.validate()
-                r.save(flush: true, failOnError: true)
-            }
-
-
-
+            ResourceRating resourceRating = new ResourceRating(user: u, resource: dr, score: 3)
+            resourceRating.save(flush: true, failOnError: true)
+            dr.addToResourceRatings(resourceRating)
+            dr.merge(flush: true)
+        }
 
     }
-    void createRatings(User user1,Resource resource)
+    /*
+
+     void createReadingItems(User user1)
     {
-
-        ResourceRating rating=new ResourceRating(user:user1,resource: resource,score: 5)
-        rating.validate()
-        rating.save(flush: true, failOnError: true)
+        Random rand = new Random()
+        int max = 10
+        (1..3).each {
+            long num =rand.nextInt(max+1)
+            if (num==0) { num =1}
+            Resource resource = Resource.findById(num)
+            ReadResources r =new ReadResources(user:user1,resource: resource,isRead: true)
+            r.validate()
+            r.save(flush: true, failOnError: true)
         }
 
-
+    }
 
 
 
@@ -101,7 +111,7 @@ void createDocumentResource(Topic topic,User user){
         subsctopic.validate()
         subsctopic.save(flush: true, failOnError: true)
 
-    }
+    }*/
 
 
     def destroy = {

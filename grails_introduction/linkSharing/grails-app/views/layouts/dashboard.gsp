@@ -1,25 +1,89 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><g:layoutTitle default="Link Sharing "/>Link Sharing </title>
+    <title><g:layoutTitle default="Link Sharing"  /></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
-    <link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
-    <asset:stylesheet src="application.css"/>
+<link rel="shortcut icon" href="${assetPath(src: 'link.png')}" type="image/x-icon">
     <asset:javascript src="application.js"/>
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap.min.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'dashboard-look.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'popupcss.css')}">
+    <style>
+    .multi-columns-row .col-xs-6 {
+        margin-bottom: 30px;
+    }
+    </style>
+    <div style="background-color: rgb(30,144,255);margin-top: 5px">
+
+        <div class="nav" role="navigation">
+
+               <g:link controller="user" action="dashboard"><g:img dir="images" file="link.png" style="height: 70px;width: 90px;float: left"/>
+
+        <h1 class="pull-center"> Link Sharing</h1></g:link>
+
+<g:if test="${session.getAttribute("user")}">
+            <div class="top-menu" style="background-color: #c4e3f3">
+
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-user dropdown-dark">  <div class="myMenu">
+                        <a href=""><g:img dir="images" file="documentresource.jpg" style="height: 38px;width: 38px;float: right"/></a>
+                        <a href=""><g:img dir="images" file="linkresource.jpg" style="height: 38px;width: 38px;float: right"/></a>
+                       <a href=""><g:img dir="images" file="message.jpeg" style="height: 38px;width: 38px;float: right"/></a>
+                       <a href=""><g:img dir="images" file="linkresource.jpg" style="height: 38px;width: 38px;float: right"/></a>
+                        <input type="text" class="form-control" id="inputSuccess2" placeholder="Search" style="height: 38px;width: 168px;float: right"/>
+
+                    </div></li>
+                    <li class="dropdown  " style="margin-top: -15px; height:38px;">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true" style="height: 60px">
+                            <img  style="background-color: #c4e3f3;width:40px;height: 35px" alt="" class="img-circle"
+                                 src="${createLink(controller: 'user', action: 'displayLogo', id: session.user.id)}">
+                            <span >${session.user.firstName}</span>
+                        </a><ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <g:link>
+                                    <i class="icon-user"></i> My Profile</g:link>
+                            </li>
+                            <g:if test="${session.user.admin}">
+
+                                <li>
+                                    <a href="test.html">
+                                        <i class="icon-users"></i> Users</a>
+                                </li>
+                                <li>
+                                    <a href="test.html">
+                                        <i class="icon-bag"></i> Topics</a>
+                                </li>
+
+                                <li>
+                                    <a href="test.html">
+                                        <i class="icon-book-open"></i> Posts</a>
+                                </li>
+
+
+                            </g:if>
+
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <g:link controller="login" action="logout">
+                                    <i class="icon-key"></i> Log Out</g:link>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+
+        </div>
+    </div>
+</g:if>
+        </div>
+    </div>
     <g:layoutHead/>
 </head>
-<body>
-<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
+<body bgcolor="d3d3d3">
+<div class="container" >
+
+    </div>
 <g:layoutBody/>
-<div class="footer" role="contentinfo"></div>
-<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 </body>
 </html>

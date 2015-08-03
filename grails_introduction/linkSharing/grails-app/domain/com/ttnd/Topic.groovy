@@ -1,14 +1,24 @@
 package com.ttnd
 
-
 class Topic {
     String name
-    User createdBy
     Date dateCreated
     Date lastUpdated
-    ConstantEnum.Visibility visibility
-    static  hasMany = [resourceavailable:Resource]
+    User createdBy
+    enum VisibilityEnum {PUBLIC,PRIVATE}
+    VisibilityEnum visibility
+    Subscription.SeriousnessValue seriousness
+    static hasMany = [resources:Resource,subscriptions:Subscription]
+    static belongsTo =[createdBy:User]
+    static transients = ['seriousness']
     static constraints = {
-       name(unique: ['createdBy'])
+        name size:5..15,blank:false,unique: 'createdBy'
     }
+
+    def afterInsert = {
+        Subscription subscription = new Subscription(user:this.createdBy,topic: this,seriousness: Subscription.SeriousnessValue.SERIOUS)
+        addToSubscriptions(subscription)
+    }
+
 }
+

@@ -1,25 +1,39 @@
 package com.ttnd
 
 class User {
+
     String email
-    String userName
+    String username
     String password
-    String confirmPassword
     String firstName
     String lastName
-    Byte photo
-    Boolean admin
-    Boolean active
+    byte[] photo
+    boolean admin
+    boolean active=true
     Date dateCreated
     Date lastUpdated
+    String fullName
+    Long subcribetotalCount
 
-    static  transients =['confirmPassword']
-static  hasMany = [subscibedTopic:Topic, createdTopics :Topic]
-    static  constraints = {
+    static transients = ['fullName','subcribetotalCount']
+    static hasMany = [topics:Topic]
 
-        email email: true, blank: false,nullable: false,unique: true
-        userName unique: true
-        photo blank:true,nullable: true
+    static constraints ={
+        username  unique: true,size:5..15,blank:false
+        email email: true,unique: true,blank:false
+        password  password:true,blank:false
+        lastName nullable:true
+        photo nullable:true,maxSize: 10*1024*1024
 
     }
+
+/**
+ *
+ * @return Full Name
+ */
+    String getFullName(){
+        return "${this.firstName} ${this.lastName}"
+    }
+
+
 }
