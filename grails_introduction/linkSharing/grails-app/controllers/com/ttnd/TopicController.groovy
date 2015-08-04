@@ -95,6 +95,17 @@ class TopicController {
         }
     }
 
+    def viewFullSite() {
+        try {
+            LinkResource resource = LinkResource.findById(params.resId)
+            println resource.url
+           return  resource.url
+        }
+        finally {
+        }
+    }
+
+
     def sendMail() {
         println "sendmail...."
         asynchronousMailService.sendMail {
@@ -153,95 +164,5 @@ class TopicController {
         println "dashboardDTO::::" + dashboardDTO.properties
         [data: dashboardDTO]
     }
-    /*def createTopic(){
 
-    }
-
-
-    def show(Topic topicInstance) {
-        respond topicInstance
-    }
-
-    def create() {
-        respond new Topic(params)
-    }
-
-    @Transactional
-    def save(Topic topicInstance) {
-        if (topicInstance == null) {
-            notFound()
-            return
-        }
-
-        if (topicInstance.hasErrors()) {
-            respond topicInstance.errors, view: 'create'
-            return
-        }
-
-        topicInstance.save flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.id])
-                redirect topicInstance
-            }
-            '*' { respond topicInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Topic topicInstance) {
-        respond topicInstance
-    }
-
-    @Transactional
-    def update(Topic topicInstance) {
-        if (topicInstance == null) {
-            notFound()
-            return
-        }
-
-        if (topicInstance.hasErrors()) {
-            respond topicInstance.errors, view: 'edit'
-            return
-        }
-
-        topicInstance.save flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Topic.label', default: 'Topic'), topicInstance.id])
-                redirect topicInstance
-            }
-            '*' { respond topicInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Topic topicInstance) {
-
-        if (topicInstance == null) {
-            notFound()
-            return
-        }
-
-        topicInstance.delete flush: true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Topic.label', default: 'Topic'), topicInstance.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*' { render status: NOT_FOUND }
-        }
-    }*/
 }

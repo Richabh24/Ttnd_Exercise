@@ -51,8 +51,8 @@ width:100%;
 .popup-container {
 position: relative;
 margin:7% auto;
-padding:30px 50px;
-background-color: #39b3d7;
+padding:0px 0px;
+background-color: #DFDFDF;
 color:#fff;
 border-radius: 3px;
 }a.popup-close {

@@ -5,9 +5,9 @@ class ApplicationFilters {
     def filters = {
         all(controller:'*', action:'*') {
             before = {
-                log.info("ip address =,${request.getRemoteHost()} params:${params}"
+           /*log.info("ip address =,${request.getRemoteHost()} params:${params}"
                 )
-
+*/
             }
             after = { Map model ->
 

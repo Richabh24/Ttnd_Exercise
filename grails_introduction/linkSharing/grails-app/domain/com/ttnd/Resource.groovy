@@ -24,7 +24,7 @@ abstract class Resource {
     }
 
     def afterInsert = {
-        ReadResources readResources = new ReadResources(resource: this,user:this.createdBy,readFlg: true)
+        ReadResources readResources = new ReadResources(resource: this,user:this.createdBy,readFlg: Boolean.TRUE)
         addToReadResources(readResources)
     }
 

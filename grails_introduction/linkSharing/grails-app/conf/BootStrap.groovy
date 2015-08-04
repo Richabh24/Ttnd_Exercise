@@ -58,7 +58,7 @@ class BootStrap {
 
         }
         5.times{j->
-            DocumentResource dr = new DocumentResource(title: "titleDocumentResource${j}",filePath: "/type/path",fileType: "img", topic: t,description: "DocResource${j}"
+            DocumentResource dr = new DocumentResource(title: "titleDocumentResource${j}",filePath: "/home/ttnd/Desktop/images/pic1.jpeg",fileType: "pic1.jpeg", topic: t,description: "DocResource${j}"
                     ,createdBy: u)
             dr.title="titleDocResource${j}"
 

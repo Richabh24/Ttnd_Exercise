@@ -35,7 +35,7 @@ def login(){
             user.properties = registerCO.properties
             if(user.photo==[]){
                 File f = grailsAttributes.getApplicationContext()
-                        .getResource("/images/dp.jpeg").getFile()
+                        .getResource("/images/human.png").getFile()
                 user.photo = new FileInputStream(f).getBytes()
             }
             userService.saveUser(user,false)
