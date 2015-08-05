@@ -159,39 +159,40 @@
 
                     <div class="panel-body">
 
-                        <g:form controller="topic" action="createLinkResource" name="userForm">
+                        <g:uploadForm enctype="multipart/form-data" controller="topic" action="createDocResource"
+                                      class="form-signin2" name="userForm">
+
 
                             <div class ="col-md-12 col-lg-12">
-                                                      <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Link<span class="text-danger">*</span> :</label></div>
-                                                      <div class="col-md-8"> <g:textField name="url" class="form-control" placeholder="Link*"/></div></div>
+                                                    <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Document<span class="text-danger">*</span> :</label></div>
+                                                    <div class="col-md-8">
+
+                                                    <input type="file"  name="file" class="form-control" placeholder="Document"/>
+
+
+
+                                                    </div></div>
                             </br>
-                            <div class="row"><div class="col-md-4"><label class="text-info"
-                                                                          style="font-size: medium">Description<span
-                                        class="text-danger">*</span> :</label></div>
 
-                                <div class="col-md-8"><g:textArea name="description" class="form-control"
-                                                                  placeholder="Description*"/></div></div>
+                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Description<span class="text-danger">*</span> :</label></div>
+                                                    <div class="col-md-8">  <g:textArea name="description" class="form-control" placeholder="Description*"/></div></div>
                             </br>
 
-                            <div class="row"><div class="col-md-4"><label class="text-info"
-                                                                          style="font-size: medium">Topic <span
-                                        class="text-danger">*</span> :</label></div>
+                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Topic<span class="text-danger">*</span> :</label></div>
+                                <div class="col-md-8"> <g:select name="topic" from="${data.subscriptions}" optionKey="id" optionValue="name"
+                                                                 title="Select a Topic" class="form-control"/>
+                                </div></div>
 
-                                <div class="col-md-8"><g:select name="topic"
-                                                                from="${data.subscriptions}"
-                                                                optionValue="name"
-                                                                optionKey="id" title="Select a Topic"
-                                                                class="form-control"/></div></div>
 
-                            </div>
 
-                                                        </br>
-                            <div align="center">
+                            </br>
+
+                        <div align="center">
                                 <g:submitButton name="Share" class="btn" type="submit"
                                                 style="background-color:#46b8da">Share</g:submitButton>
                                 <button name="Cancel" class="btn " value="Cancel"
-                                        style="background-color:#46b8da">Cancel</button></div>
-                        </g:form></div></div></div>
+                                        style="background-color:#46b8da">Cancel</button></div></div>
+                        </g:uploadForm></div></div></div>
             <a class="popup-close" href="#closed">X</a>
         </div>
     </div>
@@ -203,38 +204,36 @@
 
                     <div class="panel-body">
 
-                        <g:form controller="topic" action="createLinkResource" name="userForm">
+                        <g:form controller="topic" action="createTopic" class="form-signin2popup" name="userForm">
+                            <div class="myHeading2">
+                                <h2>Create Topic</h2>
+                            </div>
+                            <br/>
 
                             <div class ="col-md-12 col-lg-12">
-                                                      <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Link<span class="text-danger">*</span> :</label></div>
-                                                      <div class="col-md-8"> <g:textField name="url" class="form-control" placeholder="Link*"/></div></div>
-                            </br>
-                            <div class="row"><div class="col-md-4"><label class="text-info"
-                                                                          style="font-size: medium">Description<span
-                                        class="text-danger">*</span> :</label></div>
-
-                                <div class="col-md-8"><g:textArea name="description" class="form-control"
-                                                                  placeholder="Description*"/></div></div>
+                             <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Topic Name <span class="text-danger">*</span> :</label></div>
+                             <div class="col-md-8"> <g:textField name="name" class="form-control" placeholder="Topic Name"/></div></div>
                             </br>
 
-                            <div class="row"><div class="col-md-4"><label class="text-info"
-                                                                          style="font-size: medium">Topic <span
-                                        class="text-danger">*</span> :</label></div>
+                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Seriousness<span class="text-danger">*</span> :</label></div>
+                                <div class="col-md-8"> <g:select name="seriousness" class="form-control"
+                                                                 from="${com.ttnd.Subscription.SeriousnessValue}"/></div></div>
+                            <br/>
+                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Visibility<span class="text-danger">*</span> :</label></div>
+                                <div class="col-md-8"> <g:select name="visibility" class="form-control"
+                                                                 from="${com.ttnd.Topic.VisibilityEnum}"/></div></div>
+                            <br/>
 
-                                <div class="col-md-8"><g:select name="topic"
-                                                                from="${data.subscriptions}"
-                                                                optionValue="name"
-                                                                optionKey="id" title="Select a Topic"
-                                                                class="form-control"/></div></div>
 
-                            </div>
 
-                                                        </br>
+                            <g:hiddenField name="createdById" value="${session.user.id}"/>
+
+                                               </br>
                             <div align="center">
-                                <g:submitButton name="Share" class="btn" type="submit"
-                                                style="background-color:#46b8da">Share</g:submitButton>
+                                <g:submitButton name="Save" class="btn" type="submit"
+                                                style="background-color:#46b8da">Save</g:submitButton>
                                 <button name="Cancel" class="btn " value="Cancel"
-                                        style="background-color:#46b8da">Cancel</button></div>
+                                        style="background-color:#46b8da">Cancel</button></div></div>
                         </g:form></div></div></div>
             <a class="popup-close" href="#closed">X</a>
         </div>
