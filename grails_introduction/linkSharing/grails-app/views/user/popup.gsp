@@ -5,7 +5,7 @@
 		<title>Columns Clear</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap.min.css')}">
-        <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'popupcss.css')}">
+        <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'popup-lookup.css')}">
 		<style>
 			.multi-columns-row .col-xs-6 {
 				margin-bottom: 30px;

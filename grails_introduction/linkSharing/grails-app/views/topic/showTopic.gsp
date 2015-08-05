@@ -7,7 +7,7 @@
     <meta name="layout" content="dashboard">
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap.min.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'dashboard-look.css')}">
-    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'popupcss.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'popup-lookup.css')}">
     <style>
     .multi-columns-row .col-xs-6 {
         margin-bottom: 30px;
@@ -86,7 +86,7 @@
             <a class="popup-close" href="#closed">X</a>
         </div>
     </div>
-    <div class="popup-wrapper popup-class" id="popup2">
+    <div class="popup-wrapper popup-class" id="popup2"  style="height: 50px;width: 50px">
         <div class="popup-container">
             <g:form controller="topic" action="sendMail" class="form-signin2" name="userForm">
                 <div class="myHeading2">

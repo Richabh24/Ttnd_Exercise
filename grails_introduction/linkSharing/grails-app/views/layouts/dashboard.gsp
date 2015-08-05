@@ -6,7 +6,7 @@
 <asset:javascript src="application.js"/>
 <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap.min.css')}">
 <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'dashboard-look.css')}">
-<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'popupcss.css')}">
+<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'popup-lookup.css')}">
 <style>
 .multi-columns-row .col-xs-6 {
     margin-bottom: 30px;
