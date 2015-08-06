@@ -7,10 +7,11 @@ class Topic {
     User createdBy
     enum VisibilityEnum {PUBLIC,PRIVATE}
     VisibilityEnum visibility
+    boolean  isSubscribed
     Subscription.SeriousnessValue seriousness
     static hasMany = [resources:Resource,subscriptions:Subscription]
     static belongsTo =[createdBy:User]
-    static transients = ['seriousness']
+    static transients = ['seriousness','isSubscribed']
     static constraints = {
         name size:5..15,blank:false,unique: 'createdBy'
     }

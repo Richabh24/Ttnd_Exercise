@@ -57,12 +57,18 @@ class TopicController {
         [data: dashboardDTO]
     }
 
+
+
+
+
     def deleteTopic() {
-        println "params::::::::::" + params
         topicService.deleteTopic(params)
-        flash.message = "Topic successfully deleted !!! "
+        flash.message = "Topic successfully deleted! "
         redirect controller: 'user', action: 'dashboard'
     }
+
+
+
 
     def updateTopic(TopicCO topicCO) {
         println "updateTopic:::::::" + topicCO.properties
@@ -129,6 +135,9 @@ class TopicController {
         if (!resourceCO.hasErrors()) {
         }
         if (resourceCO.file) {
+
+
+            println resourceCO.filePath
             resourceCO.filePath = System.getProperty('user.home') + File.separator + 'Uploads' + File.separator + resourceCO.file.originalFilename
             resourceCO.file.transferTo(new File(resourceCO.filePath))
 

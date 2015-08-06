@@ -6,6 +6,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <asset:javascript src="application.js"/>
+    <asset:javascript src="linksharing.js"/>
+    <asset:javascript src="bootstrap-dialog.js"/>
+
+
     <meta name="layout" content="dashboard">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap.min.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'dashboard-look.css')}">
@@ -65,11 +69,12 @@
 
                     <div class="panel-body">
                         <g:render template="/layouts/topic"
-                                  model="${[topicList: data.subscriptions]}"/>
+                                  model="${[topicList: data.subscriptions,subscribe:true]}"/>
 
                     </div>
-                </div></div>
-
+                </div>
+            </div>
+</div>
 
         </br></br>
             <div class="row clearfix">
@@ -91,7 +96,6 @@
         </br></br>
 
         </div>
-    </div>
 
 
     <div class="col-md-7 col-lg-7"></br></br>

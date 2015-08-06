@@ -49,7 +49,7 @@ class BootStrap {
 
 
         5.times{j->
-            LinkResource lr = new LinkResource(title: "titleResource${j}",url:"http://www.google.com",topic: t,description: " You greatest power is your capacity to choose."
+            LinkResource lr = new LinkResource(title: "titleResource${j}",url:"http://www.google.com",topic: t,description: " THe greatest power is your capacity to choose."
                     ,createdBy: u)
             lr.title="titleResource${j}"
             lr.save(failOnError: true)

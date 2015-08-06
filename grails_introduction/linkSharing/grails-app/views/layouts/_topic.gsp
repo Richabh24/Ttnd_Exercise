@@ -18,14 +18,26 @@
 
 
                         @${topic.createdBy.username} &nbsp;&nbsp;&nbsp; Subscriptions &nbsp;&nbsp;&nbsp; Posts
-                        <p><g:if test="${session.user && !topic.createdBy.id.equals(session.user.id)&&subscribe.equals(false)}">
-                            <g:link controller="topic" action="subscribe"
-                                    params="[topic: topic.id]">Subscribe</g:link>
+                        <p>
+                        <g:if test="${session.user && topic.createdBy.id.equals(session.user.id)&& subscribe.equals(true)}">
+                            <p><g:link controller="topic" action="unsubscribe"
+                                       params="[topic: topic.id, user: session.user.id]">Unsubscribe</g:link>
+                            </p>
                         </g:if>
-                        <g:else >
-                            <g:link controller="topic" action="unsubscribe"
-                                    params="[topic: topic.id, user: session.user.id]">Unsubscribe</g:link>
-                        </g:else>
+                        <g:elseif test="${session.user &&topic.isSubscribed.equals(true)}">
+
+
+                                <p><g:link controller="topic" action="unsubscribe"
+                                       params="[topic: topic.id,user: session.user.id]">Unsubscribe</g:link>
+                        </g:elseif>
+
+                        <g:elseif test="${session.user && topic.isSubscribed.equals(false)}">
+
+                                <p><g:link controller="topic" action="subscribe"
+                                           params="[topic: topic.id,user: session.user.id]">subscribe</g:link>
+                                </p>
+                            </g:elseif>
+
                         &nbsp;&nbsp;&nbsp;${topic.subscriptions.size()}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${topic.resources.size()}
                         </p>
 
@@ -39,44 +51,8 @@
                                   value="${topic.visibility}" style="width: 76px;height: 30px"/>
 
                     </div>
-                    <div id="div${topic.id}" style="display: none">
-                        <g:form name="form1" controller="topic" action="updateTopic">
-                            <g:hiddenField name="id" value="${topic.id}"/>
-                            <g:textField name="name" id="t-${topic.id}" value="${topic.name}" ></g:textField>
-                            <div style="float: left">
-                                <g:submitButton name="s-${topic.id}" value="save" />
-                            </div>
-                            <div style="float: left">
-                                <button type="reset" id="c-${topic.id}"
-                                        onclick="editf('div${topic.id}','d${topic.id}')">Cancel</button>
-                            </div>
-                            <div class="row">
-                                <g:if test="${session.user && !topic.createdBy.id.equals(session.user.id)}">
-                                    <p> <g:link controller="topic" action="unsubscribe"
-                                                params="[topic: topic.id, user: session.user.id]">Unsubscribe</g:link>
-
-                                    </p>
-                                </g:if>
-                            </div>
-                            <div style="float: left" class="row" >
-                                <g:select name="seriousness" from="${com.ttnd.Subscription.SeriousnessValue}"
-                                          value="${topic.seriousness}" style="width: 76px;height: 30px"/>
-                            </div>
-                            <div style="float: left">
-                                <g:select name="visibility" from="${com.ttnd.Topic.VisibilityEnum}"
-                                          value="${topic.visibility}" style="width: 76px;height: 30px"/>
-                            </div>
-                            <g:hiddenField name="createdById" value="${topic.createdBy.id}"/>
-                        </g:form>
-                    </div>
-
-
-
-
-
-
                     <g:if test="${topic.visibility.equals(Topic.VisibilityEnum.PUBLIC)}">
-                        <a href="#popup2"><g:img dir="images" file="envelope54.png"
+                        <a href="#messagePopup"><g:img dir="images" file="envelope54.png"
                                                  style="height: 20px;width: 20px"/></a>
                     </g:if>
 
@@ -86,9 +62,16 @@
                             <g:img
                                     dir="images" file="pencil124.png"
                                     style="height: 20px;width: 20px"/></a>
-                        <a href="#" name="delete" onclick="deleteConfirm('${topic.id}')"><g:img dir="images" file="bin9.png"
-                                                                                                style="height:20px;width: 20px"/></a>
-                    </g:if>
+
+
+
+
+
+
+
+                        <g:link controller="topic" action="deleteTopic" params="[id: topic.id]" onclick="return confirm('Are You sure want to delete ??')"><g:img dir="images" file="bin9.png"
+                                                                                                                      style="height:20px;width: 20px"/></g:link>
+                      </g:if>
 
                 </div>
             </div>

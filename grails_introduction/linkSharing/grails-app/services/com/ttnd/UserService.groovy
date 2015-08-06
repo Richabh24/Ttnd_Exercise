@@ -1,6 +1,7 @@
 package com.ttnd
 
 import grails.transaction.Transactional
+import org.springframework.web.context.request.RequestContextHolder
 
 @Transactional
 class UserService {
@@ -31,14 +32,20 @@ class UserService {
         List<Topic> subscriptions = subscriptions(user)
         List<Topic> trendingtopic =trendings()
         List<Resource> inbox= inbox(user)
-        println "inboxsize====================="
-
         println inbox.size()
         List topics = Topic.findAllByCreatedBy(user)
         Integer topicCount = 0
         if(topics && topics!=[])
             topicCount = topics.size()
-        Integer subscriptionCount = Subscription.findByUser(user)?.count()
+
+        //Integer subscriptionCount = Subscription.findByUser(user).count()
+        Integer subscriptionCount = Subscription.createCriteria().count(){
+
+            eq("user",user)
+        }
+
+
+        println subscriptionCount
         [user:user1,subscriptions:subscriptions,trendings:trendingtopic,inbox:inbox,topicCount:topicCount,subscriptionCount:subscriptionCount]
     }
 
@@ -77,9 +84,24 @@ class UserService {
             list?.each {
                 topicList.add(it[0])
             }
-
+        topicList=updateTopicsList(topicList)
             return topicList
 
+    }
+
+    def updateTopicsList(List<Topic> topicList)
+    {
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        User user  = session.user
+        topicList.each {
+          Subscription s  =  Subscription.findByTopicAndUser(it,user)
+            if (s)
+            it.isSubscribed =true
+            else
+                it.isSubscribed=false
+
+        }
+        return  topicList
     }
 
 

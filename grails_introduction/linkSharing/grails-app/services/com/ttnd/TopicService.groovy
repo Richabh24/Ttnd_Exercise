@@ -149,8 +149,7 @@ class TopicService {
     }
 
     def deleteTopic(Map params){
-        println params
-        Topic t = Topic.load(params.topic)
+        Topic t = Topic.load(params.id)
         t.delete(flush:true)
     }
 

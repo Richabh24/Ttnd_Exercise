@@ -6,8 +6,11 @@
         <div class="row-fluid clearfix">
             <div class="col-md-3 col-lg-3 ">
                 <div class="userImg">
-                    <g:link ><img class="tweetImg" src="${createLink(controller: 'user', action: 'displayLogo ', id: row.createdBy?.id)}"/></g:link>
-                </div>
+
+
+    <g:link controller="user" action="publicProfile" params="[userId:row.createdBy.id]">
+        <img class="tweetImg" src="${createLink(controller: 'user', action: 'displayLogo ', id: row.createdBy?.id)}"/></g:link>
+              </div>
             </div>
             <div class="col-md-9 col-lg-9 ">
                 <div class="userdecription">

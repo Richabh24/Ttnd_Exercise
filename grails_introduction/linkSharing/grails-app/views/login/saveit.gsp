@@ -29,7 +29,7 @@
         </div>
 
         <div class="row">
-            <g:if test="${topic.visibility.equals(Topic.VisibilityValue.PUBLIC)}">
+            <g:if test="${topic.visibility.equals(Topic.VisibilityEnum.PUBLIC)}">
                 <g:link controller="user" action="dashboard"><g:img dir="images" file="envelope54.png"
                                                                     style="height: 45px;width: 45px"/></g:link>
             </g:if>
@@ -42,12 +42,7 @@
             </g:if>
         </div>
     </div>
-</div><%--
-  Created by IntelliJ IDEA.
-  User: intelligrape
-  Date: 30/4/15
-  Time: 11:38 PM
---%>
+</div>
 
 <%@ page import="com.ttnd.Topic" contentType="text/html;charset=UTF-8" %>
 <html>

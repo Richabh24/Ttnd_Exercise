@@ -4,7 +4,8 @@
         <article class="tweet">
 
             <div class="userImg">
-                <g:link controller="user" action="publicProfile" params="[userId:resource.createdBy.id]"><img src="${createLink(controller: 'user', action:'displayLogo ', id:resource.createdBy?.id)}"/></g:link>
+                <g:link controller="user" action="publicProfile" params="[userId:resource.createdBy.id]">
+                    <img src="${createLink(controller: 'user', action:'displayLogo ', id:resource.createdBy?.id)}"/></g:link>
             </div>
 
             <div  class="userdecription">
