@@ -17,8 +17,17 @@ class Topic {
     }
 
     def afterInsert = {
-        Subscription subscription = new Subscription(user:this.createdBy,topic: this,seriousness: Subscription.SeriousnessValue.SERIOUS)
-        addToSubscriptions(subscription)
+        println "----------"+this.seriousness.toString()
+
+        if(this.seriousness.toString()!=null&&!this.seriousness.toString().equals("null")){
+            Subscription subscription = new Subscription(user:this.createdBy,topic: this,seriousness: this.seriousness)
+            addToSubscriptions(subscription)
+
+        }else{
+            Subscription subscription = new Subscription(user:this.createdBy,topic: this,seriousness: Subscription.SeriousnessValue.SERIOUS)
+            addToSubscriptions(subscription)
+
+        }
     }
 
 }

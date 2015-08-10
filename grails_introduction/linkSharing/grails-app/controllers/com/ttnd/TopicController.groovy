@@ -9,26 +9,22 @@ import org.apache.commons.io.IOUtils
 
 @Transactional
 class TopicController {
-    def asynchronousMailService
     def topicService
-    def userService
+    def asynchronousMailService
     def resourceService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Topic.list(params), model: [topicInstanceCount: Topic.count()]
     }
 
     def createTopic(TopicCO topicCO) {
-        println session
-        println "::::::::::::::::::::" + topicCO.properties
+        println "---------" + topicCO.properties
         if (!topicCO.hasErrors()) {
-            def obj = topicService.createTopic(topicCO)
-            redirect(controller: 'user', action: 'dashboard', model: [Topic: obj], view: 'dashboard1')
+            def topicobj = topicService.createTopic(topicCO)
+            redirect(controller: 'user', action: 'dashboard', model: [Topic: topicobj], view: 'userDashBoard')
         } else {
             println topicCO.errors
-            render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
+            render(action: 'dashboard', model: [topicCO: topicCO], view: 'userDashBoard')
         }
     }
 
@@ -68,47 +64,12 @@ class TopicController {
     }
 
 
+    def subscribe(){
+        println params
+        topicService.subscribe(params,session.user)
 
-
-    def updateTopic(TopicCO topicCO) {
-        println "updateTopic:::::::" + topicCO.properties
-        if(topicCO.hasErrors()){
-            flash.message = topicCO.errors
-            render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
-        }
-        else{
-        topicService.editTopic(params, session.user)
-        flash.message = "Topic successfully updated !!! "
+        flash.message = "You have subscribed Successfully !!! "
         redirect controller: 'user', action: 'dashboard'
-    }
-    }
-
-    def downloadFile() {
-        InputStream contentStream
-        try {
-           DocumentResource resource = DocumentResource.findById(params.resId)
-            File file = new File(resource.filePath)
-            response.setHeader "Content-disposition", "attachment; filename=${resource.fileType}"
-            response.setHeader("Content-Length", "file-size")
-            response.setContentType("file-mime-type")
-            contentStream = file.newInputStream()
-            render file:contentStream,contentType: resource.fileType
-          //  response.outputStream << contentStream
-            webRequest.renderView = true
-        }
-        finally {
-            IOUtils.closeQuietly(contentStream)
-        }
-    }
-
-    def viewFullSite() {
-        try {
-            LinkResource resource = LinkResource.findById(params.resId)
-            println resource.url
-           return  resource.url
-        }
-        finally {
-        }
     }
 
 
@@ -142,31 +103,69 @@ class TopicController {
             resourceCO.file.transferTo(new File(resourceCO.filePath))
 
 
-        resourceCO.fileType = resourceCO.file.originalFilename
-        resourceService.saveDocResource(resourceCO,session.user)
-    }
-    else {
+            resourceCO.fileType = resourceCO.file.originalFilename
+            resourceService.saveDocResource(resourceCO,session.user)
+        }
+        else {
             flash.message = "error "+resourceCO.errors
-    }
-     //   params.id=resourceCO.topic
+        }
+        //   params.id=resourceCO.topic
         println "prms:::"+params
         redirect controller: 'topic', action: 'show',params: [id:resourceCO.topic.id]
     }
-        def markAsRead(){
-            println params
-            resourceService.markRead(params)
-            flash.message = "Marked As Read Successfully !!! "
-            redirect controller: 'user', action: 'dashboard'
-
-        }
-
-    def subscribe(){
+    def markAsRead(){
         println params
-        topicService.subscribe(params,session.user)
-
-        flash.message = "You have subscribed Successfully !!! "
+        resourceService.markRead(params)
+        flash.message = "Marked As Read Successfully !!! "
         redirect controller: 'user', action: 'dashboard'
+
     }
+
+
+
+    def updateTopic(TopicCO topicCO) {
+        println "updateTopic:::::::" + topicCO.properties
+        if(topicCO.hasErrors()){
+            flash.message = topicCO.errors
+            render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
+        }
+        else{
+            topicService.editTopic(params, session.user)
+            flash.message = "Topic successfully updated !!! "
+            redirect controller: 'user', action: 'dashboard'
+        }
+    }
+
+    def downloadFile() {
+        InputStream contentStream
+        try {
+            DocumentResource resource = DocumentResource.findById(params.resId)
+            File file = new File(resource.filePath)
+            response.setHeader "Content-disposition", "attachment; filename=${resource.fileType}"
+            response.setHeader("Content-Length", "file-size")
+            response.setContentType("file-mime-type")
+            contentStream = file.newInputStream()
+            render file:contentStream,contentType: resource.fileType
+            //  response.outputStream << contentStream
+            webRequest.renderView = true
+        }
+        finally {
+            IOUtils.closeQuietly(contentStream)
+        }
+    }
+
+    def viewFullSite() {
+        try {
+            LinkResource resource = LinkResource.findById(params.resId)
+            println resource.url
+            return  resource.url
+        }
+        finally {
+        }
+    }
+
+
+
 
     def showPost(){
         UserDashboardDTO dashboardDTO = topicService.showPost(params)
