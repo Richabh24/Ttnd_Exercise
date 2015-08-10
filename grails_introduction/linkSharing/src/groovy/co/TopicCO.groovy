@@ -5,9 +5,7 @@ import com.ttnd.Subscription
 import com.ttnd.Topic
 import  com.ttnd.User
 
-/**
- * Created by intelligrape on 26/4/15.
- */
+
 @Validateable
 class TopicCO {
     String name

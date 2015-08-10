@@ -3,9 +3,7 @@ package co
 import grails.validation.Validateable
 import com.ttnd.User
 
-/**
- * Created by intelligrape on 28/4/15.
- */
+
 @Validateable
 class ProfileCO {
     String firstName

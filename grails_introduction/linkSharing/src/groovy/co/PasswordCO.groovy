@@ -2,10 +2,6 @@ package co
 
 import grails.validation.Validateable
 
-
-/**
- * Created by intelligrape on 28/4/15.
- */
 @Validateable
 class PasswordCO {
     String password

@@ -1,11 +1,5 @@
 package co
 
-import grails.validation.Validateable
-import com.ttnd.User
-
-/**
- * Created by intelligrape on 24/4/15.
- */
 @Validateable
 class RegisterCO {
 
@@ -19,11 +13,11 @@ class RegisterCO {
 
     static constraints ={
         username  size:5..15,blank:false,validator:{val,obj->
-        if(User.findByUsername(val)){
-            return false
-        }
+            if(User.findByUsername(val)){
+                return false
+            }
             else
-            return true
+                return true
         }
         email email: true,blank:false,validator:{val,obj->
             if(User.findByEmail(val)){
@@ -45,3 +39,6 @@ class RegisterCO {
 
     }
 }
+import grails.validation.Validateable
+
+import com.ttnd.User
