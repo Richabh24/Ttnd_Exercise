@@ -7,7 +7,7 @@ import com.ttnd.User
 class BootStrap {
 
     def init = { servletContext ->
-        createUsers()
+       // createUsers()
 
     }
     void  createUsers(){

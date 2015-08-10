@@ -15,6 +15,9 @@ class ResourceService {
 
         if (!linkResource.hasErrors()) {
             linkResource.save(flush:true)
+            ResourceRating resourceRating1 = new ResourceRating(user: linkResource.createdBy, resource: linkResource, score: 2)
+            resourceRating1.save(flush: true, failOnError: true)
+            linkResource.addToResourceRatings(resourceRating1)
         }
         else{
             println linkResource.errors
@@ -30,6 +33,9 @@ class ResourceService {
             Topic t = resourceCO.topic
             t.addToResources(documentResource)
             t.merge(flush: true)
+            ResourceRating resourceRating1 = new ResourceRating(user: documentResource.createdBy, resource: documentResource, score: 2)
+            resourceRating1.save(flush: true, failOnError: true)
+            documentResource.addToResourceRatings(resourceRating1)
             println "at last"+t.resources.size()
         }
         else{
