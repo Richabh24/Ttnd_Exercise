@@ -14,7 +14,7 @@ class ResourceService {
         linkResource.validate()
 
         if (!linkResource.hasErrors()) {
-            linkResource.save()
+            linkResource.save(flush:true)
         }
         else{
             println linkResource.errors
@@ -26,14 +26,11 @@ class ResourceService {
             documentResource.properties = resourceCO.properties
             documentResource.createdBy=user
             documentResource.validate()
-            println "documentResource errors:::"+documentResource.errors
             documentResource.save(flush:true)
-            println "idsss::::"+documentResource.properties
             Topic t = resourceCO.topic
-            println "befre"+t.resources.size()
             t.addToResources(documentResource)
             t.merge(flush: true)
-            println "after"+t.resources.size()
+            println "at last"+t.resources.size()
         }
         else{
             println resourceCO.errors

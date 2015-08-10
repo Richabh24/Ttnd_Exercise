@@ -17,8 +17,6 @@ class Topic {
     }
 
     def afterInsert = {
-        println "----------"+this.seriousness.toString()
-
         if(this.seriousness.toString()!=null&&!this.seriousness.toString().equals("null")){
             Subscription subscription = new Subscription(user:this.createdBy,topic: this,seriousness: this.seriousness)
             addToSubscriptions(subscription)

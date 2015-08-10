@@ -12,13 +12,13 @@ class TopicController {
     def topicService
     def asynchronousMailService
     def resourceService
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Topic.list(params), model: [topicInstanceCount: Topic.count()]
     }
 
     def createTopic(TopicCO topicCO) {
-        println "---------" + topicCO.properties
         if (!topicCO.hasErrors()) {
             def topicobj = topicService.createTopic(topicCO)
             redirect(controller: 'user', action: 'dashboard', model: [Topic: topicobj], view: 'userDashBoard')
@@ -30,11 +30,11 @@ class TopicController {
 
     def show() {
         Topic topic = Topic.load(params.id)
-        println "topic params" + params
         println "topic:::" + topic.properties
         if (topic) {
-            TopicDTO topicDTO = topicService.show(topic,session.user)
-            println 'topicDTO:::'+topicDTO.properties
+            TopicDTO topicDTO = topicService.show(topic, session.user)
+            println 'topicDTO:::' + topicDTO.properties
+
             render view: 'showTopic', model: [data: topicDTO]
         }
     }
@@ -54,9 +54,6 @@ class TopicController {
     }
 
 
-
-
-
     def deleteTopic() {
         topicService.deleteTopic(params)
         flash.message = "Topic successfully deleted! "
@@ -64,9 +61,9 @@ class TopicController {
     }
 
 
-    def subscribe(){
+    def subscribe() {
         println params
-        topicService.subscribe(params,session.user)
+        topicService.subscribe(params, session.user)
 
         flash.message = "You have subscribed Successfully !!! "
         redirect controller: 'user', action: 'dashboard'
@@ -82,9 +79,9 @@ class TopicController {
         }
     }
 
-    def createLinkResource(LinkResource resource){
-        resource.createdBy=session.user
-        println "resource added: "+resource.properties
+    def createLinkResource(LinkResource resource) {
+        resource.createdBy = session.user
+        println "link resource added------> " + resource.properties
         resourceService.saveLinkResource(resource)
         redirect controller: 'user', action: 'dashboard'
     }
@@ -98,22 +95,24 @@ class TopicController {
         if (resourceCO.file) {
 
 
-            println resourceCO.filePath
+            File f = new File(System.getProperty('user.home') + File.separator + "Uploads")
+            if (!f.exists()) {
+                f.mkdir();
+
+            }
             resourceCO.filePath = System.getProperty('user.home') + File.separator + 'Uploads' + File.separator + resourceCO.file.originalFilename
             resourceCO.file.transferTo(new File(resourceCO.filePath))
 
 
             resourceCO.fileType = resourceCO.file.originalFilename
-            resourceService.saveDocResource(resourceCO,session.user)
+            resourceService.saveDocResource(resourceCO, session.user)
+        } else {
+            flash.message = "error " + resourceCO.errors
         }
-        else {
-            flash.message = "error "+resourceCO.errors
-        }
-        //   params.id=resourceCO.topic
-        println "prms:::"+params
-        redirect controller: 'topic', action: 'show',params: [id:resourceCO.topic.id]
+        redirect controller: 'user', action: 'dashboard'
     }
-    def markAsRead(){
+
+    def markAsRead() {
         println params
         resourceService.markRead(params)
         flash.message = "Marked As Read Successfully !!! "
@@ -122,14 +121,12 @@ class TopicController {
     }
 
 
-
     def updateTopic(TopicCO topicCO) {
         println "updateTopic:::::::" + topicCO.properties
-        if(topicCO.hasErrors()){
+        if (topicCO.hasErrors()) {
             flash.message = topicCO.errors
             render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
-        }
-        else{
+        } else {
             topicService.editTopic(params, session.user)
             flash.message = "Topic successfully updated !!! "
             redirect controller: 'user', action: 'dashboard'
@@ -145,7 +142,7 @@ class TopicController {
             response.setHeader("Content-Length", "file-size")
             response.setContentType("file-mime-type")
             contentStream = file.newInputStream()
-            render file:contentStream,contentType: resource.fileType
+            render file: contentStream, contentType: resource.fileType
             //  response.outputStream << contentStream
             webRequest.renderView = true
         }
@@ -158,16 +155,14 @@ class TopicController {
         try {
             LinkResource resource = LinkResource.findById(params.resId)
             println resource.url
-            return  resource.url
+            return resource.url
         }
         finally {
         }
     }
 
 
-
-
-    def showPost(){
+    def showPost() {
         UserDashboardDTO dashboardDTO = topicService.showPost(params)
         println "dashboardDTO::::" + dashboardDTO.properties
         [data: dashboardDTO]

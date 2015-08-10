@@ -19,7 +19,6 @@ class TopicService {
         //        top.properties = topic.properties
         top.name = topic.name
         top.createdBy = User.get(topic.createdById)
-        println "--seriousness====" + topic.seriousness.toString();
         if (topic.visibility.toString().equals(Topic.VisibilityEnum.PUBLIC.toString()))
             top.visibility = Topic.VisibilityEnum.PUBLIC
         else

@@ -122,6 +122,12 @@
                         <g:form controller="topic" action="createLinkResource" name="userForm">
 
                             <div class ="col-md-12 col-lg-12">
+
+                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Title<span class="text-danger">*</span> :</label></div>
+                                                      <div class="col-md-8"> <g:textField name="title" class="form-control" placeholder="Title*"/></div></div>
+                            </br>
+
+
                                                       <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Link<span class="text-danger">*</span> :</label></div>
                                                       <div class="col-md-8"> <g:textField name="url" class="form-control" placeholder="Link*"/></div></div>
                             </br>
@@ -168,6 +174,9 @@
 
 
                             <div class ="col-md-12 col-lg-12">
+                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Title<span class="text-danger">*</span> :</label></div>
+                                                      <div class="col-md-8"> <g:textField name="title" class="form-control" placeholder="Title*"/></div></div>
+                            </br>
                                                     <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Document<span class="text-danger">*</span> :</label></div>
                                                     <div class="col-md-8">
 
