@@ -150,16 +150,23 @@ class TopicController {
 
 
     def updateTopic(TopicCO topicCO) {
+        println "testtttt---->"
+      println  topicCO.properties
         if (topicCO.hasErrors()) {
             flash.message = topicCO.errors
-            render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
+            render(action: 'dashboard', model: [topicCO: topicCO], view: 'userDashBoard')
         } else {
             topicService.editTopic(params, session.user)
             flash.message = "Topic successfully updated ! "
             redirect controller: 'user', action: 'dashboard'
         }
     }
+    def updateSeriousness(params) {
 
+            topicService.editTopic(params, session.user)
+            flash.message = "Topic successfully updated ! "
+            redirect controller: 'user', action: 'dashboard'
+    }
     def downloadFile() {
         InputStream contentStream
         try {

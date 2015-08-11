@@ -13,7 +13,24 @@ function showError(msg) {
 
 }
 
+/*function ChangeVisibility( id){
 
+var s=  $("#seriousnessiD").val()
+
+    alert("topic--->"+id +"  seriousnes ->  "+s);
+
+}*/
+/*function ChangeVisibility( seriousness,id,visible){
+
+
+
+    alert("seriousness--->"+seriousness+"topic--->"+id +"visible="+visible);
+
+
+
+
+
+}*/
 function showSuccess(msg) {
     BootstrapDialog.show({
         title:'Success',

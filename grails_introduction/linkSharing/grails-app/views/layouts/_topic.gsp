@@ -45,10 +45,10 @@
 
                         <div style="float: left">
                             <g:select name="seriousness" from="${com.ttnd.Subscription.SeriousnessValue}"
-                                      value="${topic.seriousness}" style="width: 76px;height: 30px"/>
+                                      value="${topic.seriousness}" style="width: 76px;height: 30px" id ="seriousnessiD" onchange="ChangeTopicValues(this.value,${topic.id},'${topic.visibility}','${topic.name}',${session.user.id})"/>
                         </div>
                         <g:select name="visibility" from="${com.ttnd.Topic.VisibilityEnum}"
-                                  value="${topic.visibility}" style="width: 76px;height: 30px"/>
+                                  value="${topic.visibility}" style="width: 76px;height: 30px" id ="visibilityid" onchange="ChangeTopicValues('${topic.seriousness}',${topic.id},this.value,'${topic.name}',${session.user.id})"/>
 
                     </div>
                     <g:if test="${topic.visibility.equals(Topic.VisibilityEnum.PUBLIC)}">
@@ -78,3 +78,22 @@
         </div>
     </article>
 </g:each>
+<script>
+
+
+    function ChangeTopicValues( seriousness,id,visible,name,user){
+
+/*
+        var s=  $("#seriousnessiD").val()
+*/
+
+        alert("topic--->"+id +"  seriousnes ->  "+seriousness+"  visibility=="+visible+"  name-->"+name +"   user=="+user);
+
+        <g:remoteFunction controller="topic" action="updateSeriousness"  params="'id='+id+'&name='+name+'&seriousness='+seriousness+'&visibility='+visible+'&createdById='+user"/>
+
+
+
+    }
+
+
+</script>
