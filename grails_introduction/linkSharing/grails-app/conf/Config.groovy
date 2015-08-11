@@ -88,6 +88,20 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails {
+            mail {
+                host = "smtp.gmail.com"
+                port = 465
+                username = "rbhadani24@gmail.com"
+                password = "mypass9931524511"
+                props = ["mail.smtp.auth":"true",
+                         "mail.smtp.socketFactory.port":"465",
+                         "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                         "mail.smtp.socketFactory.fallback":"false"]
+
+            } }
+
+
     }
     production {
         grails.logging.jul.usebridge = false
@@ -117,15 +131,3 @@ log4j.main = {
 
     debug 'grails.app'
 }
-grails {
-    mail {
-        host = "smtp.gmail.com"
-        port = 465
-        username = "rbhadani24@gmail.com"
-        password = "mypass9931524511"
-        props = ["mail.smtp.auth":"true",
-                 "mail.smtp.socketFactory.port":"465",
-                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-                 "mail.smtp.socketFactory.fallback":"false"]
-
-    } }

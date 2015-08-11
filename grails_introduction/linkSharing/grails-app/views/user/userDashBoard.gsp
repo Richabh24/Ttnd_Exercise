@@ -260,11 +260,11 @@
 
                     <div class="panel-body">
 
-                        <g:form controller="topic" action="createLinkResource" name="userForm">
+                        <g:form controller="topic" action="sendMail" name="userForm">
 
                             <div class ="col-md-12 col-lg-12">
                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Email<span class="text-danger">*</span> :</label></div>
-                             <div class="col-md-8"> <g:textField name="url" class="form-control" placeholder="Link*"/></div></div>
+                             <div class="col-md-8"> <g:textField name="receiverEmail" class="form-control" placeholder="Email*"/></div></div>
                             </br>
 
                             <div class="row"><div class="col-md-4"><label class="text-info"

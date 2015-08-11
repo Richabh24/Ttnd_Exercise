@@ -47,13 +47,10 @@ class UserController {
         }
     }
     def publicProfile() {
-        println "userId::"+params.userId
         User user = User.findById(params.userId)
-        println "user:::::::::"+user.properties
         if (user) {
 
             UserDashboardDTO dashboardDTO = userService.dashboard(user)
-            println "dash:::::::::"+dashboardDTO.properties
             render view: 'publicProfile', model: [data: dashboardDTO]
         }
 
@@ -72,10 +69,8 @@ class UserController {
     }
 
     def updateProfile(ProfileCO profileCO){
-        println "profileCO++++++"+profileCO.properties
         println params
         if (!profileCO.hasErrors()) {
-            println "inside if statement"
             User user = session.user as User
             user.properties =profileCO.properties
             userService.saveUser(user,true)
@@ -83,15 +78,12 @@ class UserController {
             redirect(controller:'user',action:'profile')
         } else {
             UserDashboardDTO dashboardDTO = userService.dashboard(session.user)
-
             render (view: 'profile',model: [profileCO:profileCO,data:dashboardDTO])
         }
     }
 
 
     def updatePassword(PasswordCO passwordCO){
-        println "passwordCO++++++"+passwordCO.properties
-        println params
         if (!passwordCO.hasErrors()) {
             User user = session.user
             user.properties =passwordCO.properties
@@ -103,101 +95,6 @@ class UserController {
             render (view: 'profile',model: [passwordCO:passwordCO,data:dashboardDTO])
         }
     }
-
-
-/*
-    def show(User userInstance) {
-        respond userInstance
-    }
-
-    def create() {
-        respond new User(params)
-    }
-
-    @Transactional
-    def save(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
-
-        if (userInstance.hasErrors()) {
-            respond userInstance.errors, view:'create'
-            return
-        }
-
-        userInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
-                redirect userInstance
-            }
-            '*' { respond userInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(User userInstance) {
-        respond userInstance
-    }
-
-    @Transactional
-    def update(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
-
-        if (userInstance.hasErrors()) {
-            respond userInstance.errors, view:'edit'
-            return
-        }
-
-        userInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                redirect userInstance
-            }
-            '*'{ respond userInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(User userInstance) {
-
-        if (userInstance == null) {
-            notFound()
-            return
-        }
-
-        userInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
-
-
-*/
-
-
 
 
 

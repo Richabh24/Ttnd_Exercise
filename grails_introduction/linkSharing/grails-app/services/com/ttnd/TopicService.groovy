@@ -185,6 +185,6 @@ class TopicService {
             sumRating = resource.resourceRatings.score.sum() / resource.resourceRatings.size()
             println "sumRating" + sumRating
         }
-        [inbox: resource as List, trendings: userService.trendings(), topicCount: sumRating]
+        [inbox: resource as List, trendings: userService.gettrendings(), topicCount: sumRating]
     }
 }

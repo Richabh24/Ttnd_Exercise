@@ -30,7 +30,7 @@ class UserService {
     Map dashboard(User user){
         User user1=user
         List<Topic> subscriptions = subscriptions(user)
-        List<Topic> trendingtopic =trendings()
+        List<Topic> trendingtopic =gettrendings()
         List<Resource> inbox= inbox(user)
         println inbox.size()
         List topics = Topic.findAllByCreatedBy(user)
@@ -65,7 +65,7 @@ class UserService {
         return topicList
     }
 
-    List<Topic> trendings(){
+    List<Topic> gettrendings(){
 
             List list = Resource.createCriteria().list {
                 projections {

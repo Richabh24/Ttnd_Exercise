@@ -10,9 +10,10 @@ import org.apache.commons.io.IOUtils
 @Transactional
 class TopicController {
     def topicService
-    def asynchronousMailService
     def resourceService
-
+    def mailService
+    def groovyPageRenderer
+    def grailsLinkGenerator
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Topic.list(params), model: [topicInstanceCount: Topic.count()]
@@ -41,15 +42,13 @@ class TopicController {
 
     def unsubscribe() {
         topicService.unsubscribe(params.topic, params.user)
-        flash.message = "You have unsubscribed Successfully !!! "
+        flash.message = "unsubscribed Successfully !!! "
         redirect controller: 'user', action: 'dashboard'
     }
 
     def subscriptionList() {
         User user = session.user
-        println "subscriptionList user ::::" + params
         UserDashboardDTO dashboardDTO = topicService.subsciptionList(user, params)
-        println "dashboardDTO::::" + dashboardDTO.properties
         [data: dashboardDTO]
     }
 
@@ -65,18 +64,47 @@ class TopicController {
         println params
         topicService.subscribe(params, session.user)
 
-        flash.message = "You have subscribed Successfully !!! "
+        flash.message = "subscribed Successfully !!! "
         redirect controller: 'user', action: 'dashboard'
     }
 
 
+    def subscribeForAnyUser() {
+        println params
+        session.user=  User.findById(params.user)
+        topicService.subscribe(params, session.user)
+
+        flash.message = "subscribed Successfully !!! "
+        redirect controller: 'user', action: 'dashboard'
+    }
+
+
+
     def sendMail() {
-        println "sendmail...."
-        asynchronousMailService.sendMail {
-            to "rbhadani24@gmail.com"
-            subject "Test"
-            body "Mail body111111111"
-        }
+        String link = grailsLinkGenerator.serverBaseURL
+        String acceptlink=link
+        mailService.sendMail {
+            println "sendmail...."
+
+            to params.receiverEmail
+            subject "Junk mail.. delete it"
+         User   user = User.findByEmail(params.receiverEmail)
+
+            if(user){
+                acceptlink =link
+                link = link+"/topic/show/"+params.topic
+
+            }else{
+                link =link+"/login"
+
+            }
+                def content = groovyPageRenderer.render(view: '/layouts/email',model: [link:link,acceptlink:acceptlink,topic:params.topic,user:user])
+                html(content)
+
+            }
+
+        redirect controller: 'user', action: 'dashboard'
+
     }
 
     def createLinkResource(LinkResource resource) {
@@ -122,13 +150,12 @@ class TopicController {
 
 
     def updateTopic(TopicCO topicCO) {
-        println "updateTopic:::::::" + topicCO.properties
         if (topicCO.hasErrors()) {
             flash.message = topicCO.errors
             render(action: 'dashboard', model: [topicCO: topicCO], view: 'dashboard1')
         } else {
             topicService.editTopic(params, session.user)
-            flash.message = "Topic successfully updated !!! "
+            flash.message = "Topic successfully updated ! "
             redirect controller: 'user', action: 'dashboard'
         }
     }
