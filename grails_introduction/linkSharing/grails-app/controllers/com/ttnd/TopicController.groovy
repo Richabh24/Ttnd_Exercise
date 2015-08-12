@@ -51,7 +51,12 @@ class TopicController {
         UserDashboardDTO dashboardDTO = topicService.subsciptionList(user, params)
         [data: dashboardDTO]
     }
-
+    def trendingTopicList() {
+        User user = session.user
+        UserDashboardDTO dashboardDTO = topicService.trendingTopicList(user, params)
+        [data: dashboardDTO]
+        render view: "subscriptionList"
+    }
 
     def deleteTopic() {
         topicService.deleteTopic(params)
@@ -116,7 +121,7 @@ class TopicController {
 
 
     def createDocResource(ResourceCO resourceCO) {
-        println("resourceCO::::::::" + resourceCO.properties)
+        println("resourceCO" + resourceCO.properties)
         println resourceCO.file.originalFilename
         if (!resourceCO.hasErrors()) {
         }
@@ -150,7 +155,6 @@ class TopicController {
 
 
     def updateTopic(TopicCO topicCO) {
-        println "testtttt---->"
       println  topicCO.properties
         if (topicCO.hasErrors()) {
             flash.message = topicCO.errors
@@ -198,7 +202,6 @@ class TopicController {
 
     def showPost() {
         UserDashboardDTO dashboardDTO = topicService.showPost(params)
-        println "dashboardDTO::::" + dashboardDTO.properties
         [data: dashboardDTO]
     }
 

@@ -13,11 +13,11 @@ class LoginController {
     }
 def login(){
     println params
-        def u = User.findByEmailAndPassword(params.email, params.password)
-        if(!u)
-         u = User.findByUsernameAndPassword(params.email, params.password)
-        if (u) {
-            session.user = u
+        def tempuser= User.findByEmailAndPassword(params.email, params.password)
+        if(!tempuser)
+            tempuser= User.findByUsernameAndPassword(params.email, params.password)
+        if (tempuser) {
+            session.user = tempuser
             println session.user
                       redirect(controller:'user',action:'dashboard')
         } else {

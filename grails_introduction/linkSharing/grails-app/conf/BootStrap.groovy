@@ -33,7 +33,7 @@ class BootStrap {
     }
    void createTopics(User u){
 
-       5.times { i->
+       6.times { i->
            // println(i)
            Topic t =    new Topic(createdBy: u, name: "Power Test:  ${i}", visibility: Topic.VisibilityEnum.PUBLIC)
            t.save(failOnError: true)
@@ -48,7 +48,7 @@ class BootStrap {
     void createResources(Topic t,User u){
 
 
-        5.times{j->
+        6.times{j->
             LinkResource lr = new LinkResource(title: "titleResource${j}",url:"http://www.google.com",topic: t,description: " THe greatest power is your capacity to choose."
                     ,createdBy: u)
             lr.title="titleResource${j}"
@@ -57,7 +57,7 @@ class BootStrap {
             t.addToResources(lr)
 
         }
-        5.times{j->
+        6.times{j->
             DocumentResource dr = new DocumentResource(title: "titleDocumentResource${j}",filePath: "/home/ttnd/Desktop/images/pic1.jpeg",fileType: "pic1.jpeg", topic: t,description: "DocResource${j}"
                     ,createdBy: u)
             dr.title="titleDocResource${j}"

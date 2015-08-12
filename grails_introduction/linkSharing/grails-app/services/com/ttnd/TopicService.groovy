@@ -2,6 +2,7 @@ package com.ttnd
 
 import co.TopicCO
 import grails.transaction.Transactional
+import org.springframework.web.context.request.RequestContextHolder
 
 @Transactional
 class TopicService {
@@ -108,6 +109,45 @@ class TopicService {
         }
 
     }
+    def updateTopicsList(List<Topic> topicList)
+    {
+        def session = RequestContextHolder.currentRequestAttributes().getSession()
+        User user  = session.user
+        topicList.each {
+            Subscription s  =  Subscription.findByTopicAndUser(it,user)
+            if (s)
+                it.isSubscribed =true
+            else
+                it.isSubscribed=false
+
+        }
+        return  topicList
+    }
+    Map trendingTopicList(User user, Map params) {
+        if (!params.offset)
+            params.offset = 0
+        if (!params.max)
+            params.max = 5
+        List<Topic> topics = []
+
+        List<Topic> trendings = []
+        List<Resource> resources = []
+        trendings =getAlltrendings(params)
+        println trendings
+        Integer topicCount = 0
+
+
+        if (trendings != []) {
+            topicCount = Resource.findAllByTopicInList(trendings).size()
+
+            if (trendings != [])
+                resources = resourcesList(trendings, params)
+        }
+
+        Integer subscriptionCount = Subscription.findAllByUser(user).size()
+        println "topicCount---------------" + topicCount
+        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,trendingtopicCount:trendingtopicCount, topicCount: topicCount, subscriptionCount: subscriptionCount]
+    }
 
     Map subsciptionList(User user, Map params) {
         if (!params.offset)
@@ -121,7 +161,14 @@ class TopicService {
          topics = params.data.subscriptions*/
         List<Topic> trendings = []
         List<Resource> resources = []
+        //  trendings =getAlltrendings(params)
+        println trendings
         Integer topicCount = 0
+        //  Integer trendingtopicCount = 0
+/*
+        if (trendings != []) {
+            trendingtopicCount = Resource.findAllByTopicInList(trendings).size()}*/
+
         if (topics != []) {
             topicCount = Resource.findAllByTopicInList(topics).size()
 
@@ -132,12 +179,37 @@ class TopicService {
              resources= params.data.inbox*/
         Integer subscriptionCount = Subscription.findAllByUser(user).size()
         println "topicCount---------------" + topicCount
-        [user: user, subscriptions: topics, trendings: trendings, inbox: resources, topicCount: topicCount, subscriptionCount: subscriptionCount]
+        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,topicCount: topicCount, subscriptionCount: subscriptionCount]
+    }
+
+
+    List<Topic> getAlltrendings(Map params){
+
+        List list = Resource.createCriteria().list {
+            projections {
+                groupProperty('topic')
+                'topic' {
+                    eq('visibility', Topic.VisibilityEnum.PUBLIC)
+                }
+                count('id', 'count')
+                maxResults  params.max
+                order('count', 'desc')
+            }
+
+        }
+
+        List<Topic> topicList = []
+        list?.each {
+            topicList.add(it[0])
+        }
+        topicList=updateTopicsList(topicList)
+        return topicList
+
     }
 
 
     List<Topic> subscriptions(User user, Map params) {
-        List<Subscription> subscriptions = Subscription.createCriteria().list(max: 5) {
+        List<Subscription> subscriptions = Subscription.createCriteria().list( params) {
             eq('user', user)
             order('dateCreated', 'desc')
         }
