@@ -73,13 +73,6 @@
                             <g:img
                                     dir="images" file="pencil124.png"
                                     style="height: 20px;width: 20px"/></a>
-
-
-
-
-
-
-
                         <g:link controller="topic" action="deleteTopic" params="[id: topic.id]" onclick="return confirm('Are You sure want to delete ??')"><g:img dir="images" file="bin9.png"
                                                                                                                       style="height:20px;width: 20px"/></g:link>
                       </g:if>
@@ -96,7 +89,7 @@
        // alert("topic--->"+id +"  seriousnes ->  "+seriousness+"  visibility=="+visible+"  name-->"+name +"   user=="+user);
         <g:remoteFunction controller="topic" action="updateTopicProperty" update= "greetingBox" params="'id='+id+'&name='+name+'&seriousness='+seriousness+'&visibility='+visible+'&createdById='+user"/>
 
-       
+
 
     }
 function tempName(){

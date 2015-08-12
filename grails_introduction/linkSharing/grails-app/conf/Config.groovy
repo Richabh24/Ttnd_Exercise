@@ -93,7 +93,7 @@ environments {
                 host = "smtp.gmail.com"
                 port = 465
                 username = "rbhadani24@gmail.com"
-                password = "mypass9931524511"
+                password = ""
                 props = ["mail.smtp.auth":"true",
                          "mail.smtp.socketFactory.port":"465",
                          "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
