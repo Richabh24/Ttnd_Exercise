@@ -161,11 +161,11 @@ class TopicController {
             redirect controller: 'user', action: 'dashboard'
         }
     }
-    def updateSeriousness(params) {
+    def updateTopicProperty(params) {
 
             topicService.editTopic(params, session.user)
-            flash.message = "Topic successfully updated ! "
-            redirect controller: 'user', action: 'dashboard'
+            render "<h2><b><p>Topic successfully updated!</p></b></h2>"
+
     }
     def downloadFile() {
         InputStream contentStream
