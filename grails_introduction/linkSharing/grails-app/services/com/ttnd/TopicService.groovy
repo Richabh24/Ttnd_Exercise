@@ -38,13 +38,23 @@ class TopicService {
 
     }
 
-    Map show(Topic topic, User user) {
+    Map show(Topic topic, User user, Map params) {
+        if (!params.offset)
+            params.offset = 0
+        if (!params.max)
+            params.max = 5
         List<User> users = users(topic)
         List<Topic> subscriptions = []
         if (user)
             subscriptions = userService.subscriptions(user)
-        List<Resource> resources = resources(topic)
-        [topic: topic, users: users, resources: resources, subscriptions: subscriptions]
+        // List<Resource> resources = resources(topic)
+        List<Topic> topiclist = new ArrayList<Topic>();
+        topiclist.add(topic)
+        Integer resourceCount = 0
+        resourceCount = Resource.findAllByTopicInList(topiclist).size()
+        List<Resource> resources = resourcesList(topiclist, params)
+
+        [topic: topic, users: users, resources: resources, resourceCount: resourceCount, subscriptions: subscriptions]
     }
 
 
@@ -81,6 +91,15 @@ class TopicService {
         return resourceList
     }
 
+    List<Resource> resourcesByPage(Topic topic) {
+        println "Topic::::::" + topic.properties
+        List<Resource> resourceList = []
+        if (topic.resources == null || topic.resources != [])
+            resourceList = topic.resources as List
+        return resourceList
+    }
+
+
     def unsubscribe(String topic, String user) {
         Topic t = Topic.load(topic)
         User u = User.load(user)
@@ -109,20 +128,21 @@ class TopicService {
         }
 
     }
-    def updateTopicsList(List<Topic> topicList)
-    {
+
+    def updateTopicsList(List<Topic> topicList) {
         def session = RequestContextHolder.currentRequestAttributes().getSession()
-        User user  = session.user
+        User user = session.user
         topicList.each {
-            Subscription s  =  Subscription.findByTopicAndUser(it,user)
+            Subscription s = Subscription.findByTopicAndUser(it, user)
             if (s)
-                it.isSubscribed =true
+                it.isSubscribed = true
             else
-                it.isSubscribed=false
+                it.isSubscribed = false
 
         }
-        return  topicList
+        return topicList
     }
+
     Map trendingTopicList(User user, Map params) {
         if (!params.offset)
             params.offset = 0
@@ -132,7 +152,7 @@ class TopicService {
 
         List<Topic> trendings = []
         List<Resource> resources = []
-        trendings =getAlltrendings(params)
+        trendings = getAlltrendings(params)
         println trendings
         Integer topicCount = 0
 
@@ -146,7 +166,7 @@ class TopicService {
 
         Integer subscriptionCount = Subscription.findAllByUser(user).size()
         println "topicCount---------------" + topicCount
-        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,trendingtopicCount:trendingtopicCount, topicCount: topicCount, subscriptionCount: subscriptionCount]
+        [user: user, subscriptions: topics, trendings: trendings, inbox: resources, trendingtopicCount: trendingtopicCount, topicCount: topicCount, subscriptionCount: subscriptionCount]
     }
 
     Map subsciptionList(User user, Map params) {
@@ -156,7 +176,7 @@ class TopicService {
             params.max = 5
         List<Topic> topics = []
         topics = subscriptions(user, params)
-        topics=updateTopicsList(topics)
+        topics = updateTopicsList(topics)
 
         List<Topic> trendings = []
         List<Resource> resources = []
@@ -176,10 +196,10 @@ class TopicService {
 
         Integer subscriptionCount = Subscription.findAllByUser(user).size()
         println "topicCount---------------" + topicCount
-        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,topicCount: topicCount,resourceCount: resourceCount, subscriptionCount: subscriptionCount]
+        [user: user, subscriptions: topics, trendings: trendings, inbox: resources, topicCount: topicCount, resourceCount: resourceCount, subscriptionCount: subscriptionCount]
     }
 
-    List<Topic> getAlltrendings(Map params){
+    List<Topic> getAlltrendings(Map params) {
 
         List list = Resource.createCriteria().list {
             projections {
@@ -188,7 +208,7 @@ class TopicService {
                     eq('visibility', Topic.VisibilityEnum.PUBLIC)
                 }
                 count('id', 'count')
-                maxResults  params.max
+                maxResults params.max
                 order('count', 'desc')
             }
 
@@ -198,21 +218,21 @@ class TopicService {
         list?.each {
             topicList.add(it[0])
         }
-        topicList=updateTopicsList(topicList)
+        topicList = updateTopicsList(topicList)
         return topicList
 
     }
 
 
     List<Topic> subscriptions(User user, Map params) {
-        List<Subscription> subscriptions = Subscription.createCriteria().list( params) {
+        List<Subscription> subscriptions = Subscription.createCriteria().list(params) {
             eq('user', user)
             order('dateCreated', 'desc')
         }
         println "subscriptions:::::" + subscriptions.topic
 
-        List<Topic> topicList =[]
-        subscriptions?.each {Subscription s->
+        List<Topic> topicList = []
+        subscriptions?.each { Subscription s ->
             Topic t = s.topic
             t.seriousness = s.seriousness
             topicList.add(t)

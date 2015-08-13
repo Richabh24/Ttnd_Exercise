@@ -33,7 +33,7 @@ class TopicController {
         Topic topic = Topic.load(params.id)
         println "topic:::" + topic.properties
         if (topic) {
-            TopicDTO topicDTO = topicService.show(topic, session.user)
+            TopicDTO topicDTO = topicService.show(topic, session.user,params)
             println 'topicDTO:::' + topicDTO.properties
 
             render view: 'showTopic', model: [data: topicDTO]
