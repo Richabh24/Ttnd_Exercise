@@ -51,7 +51,7 @@
                 <div class="sharetweets subscriptions">
                     <div class="myheading">
                         <h2>Subscriptions  <g:link style="float: right" controller="topic"
-                                                   action="subscriptionList">view all</g:link></h2>
+                                                   action="fetchsubscriptionList">view all</g:link></h2>
                     </div></br>
                     <g:hasErrors bean="${topicCO}">
                         <g:eachError><p><g:message error="${it}" class="error"/></p></g:eachError>

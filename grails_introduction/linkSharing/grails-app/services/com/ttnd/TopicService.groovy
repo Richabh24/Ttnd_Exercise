@@ -155,33 +155,29 @@ class TopicService {
         if (!params.max)
             params.max = 5
         List<Topic> topics = []
-        /*if(params.top || !params.data)*/
         topics = subscriptions(user, params)
-        /* else
-         topics = params.data.subscriptions*/
+        topics=updateTopicsList(topics)
+
         List<Topic> trendings = []
         List<Resource> resources = []
         //  trendings =getAlltrendings(params)
         println trendings
         Integer topicCount = 0
-        //  Integer trendingtopicCount = 0
-/*
-        if (trendings != []) {
-            trendingtopicCount = Resource.findAllByTopicInList(trendings).size()}*/
+        Integer resourceCount = 0
+
 
         if (topics != []) {
-            topicCount = Resource.findAllByTopicInList(topics).size()
+            topicCount = Topic.findAllByCreatedBy(user).size();
+            resourceCount = Resource.findAllByTopicInList(topics).size()
 
             if (topics != [])
                 resources = resourcesList(topics, params)
         }
-        /* else
-             resources= params.data.inbox*/
+
         Integer subscriptionCount = Subscription.findAllByUser(user).size()
         println "topicCount---------------" + topicCount
-        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,topicCount: topicCount, subscriptionCount: subscriptionCount]
+        [user: user, subscriptions: topics, trendings: trendings, inbox: resources,topicCount: topicCount,resourceCount: resourceCount, subscriptionCount: subscriptionCount]
     }
-
 
     List<Topic> getAlltrendings(Map params){
 
@@ -214,7 +210,15 @@ class TopicService {
             order('dateCreated', 'desc')
         }
         println "subscriptions:::::" + subscriptions.topic
-        return subscriptions.topic
+
+        List<Topic> topicList =[]
+        subscriptions?.each {Subscription s->
+            Topic t = s.topic
+            t.seriousness = s.seriousness
+            topicList.add(t)
+        }
+        return topicList
+
     }
 
     List<Resource> resourcesList(List<Topic> topics, Map params) {

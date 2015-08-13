@@ -67,9 +67,9 @@
                         </h3></div>
 
                     <div class="panel-body">
-                        <g:render template="/layouts/topic" model="${[topicList:data.subscriptions]}" />
+                        <g:render template="/layouts/topic" model="${[topicList:data.subscriptions,subscribe:true]}" />
                         <div class="pagination">
-                        <g:paginate action="subscriptionList" total="${data.subscriptionCount}" max="3" params="[top:true,data:data]"/>
+                        <g:paginate action="fetchsubscriptionList" total="${data.subscriptionCount}" max="5" params="[top:true,data:data]"/>
 </div>
 
                     </div>
@@ -95,7 +95,7 @@
 
                 <div class="panel-body">
                     <g:render template="/layouts/resource" model="${[items:data.inbox]}" />
-                </div><g:paginate action="subscriptionList" total="${data.topicCount}" max="3" params="[res:true,data:data]" />                </div></div></div>
+                </div><g:paginate action="fetchsubscriptionList" total="${data.resourceCount}" max="5" params="[res:true,data:data]" />                </div></div></div>
     </div>
 
 

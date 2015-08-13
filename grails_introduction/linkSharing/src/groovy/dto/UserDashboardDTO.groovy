@@ -11,6 +11,7 @@ class UserDashboardDTO {
     List<Resource> inbox
     Integer subscriptionCount = 0
     Integer topicCount = 0
+    Integer resourceCount = 0
 
     UserDashboardDTO(Map dashboardMap){
         this.user=dashboardMap.user
@@ -19,5 +20,6 @@ class UserDashboardDTO {
         this.subscriptions=dashboardMap.subscriptions
         this.subscriptionCount=dashboardMap.subscriptionCount
         this.topicCount=dashboardMap.topicCount
+        this.resourceCount=dashboardMap.resourceCount
     }
 }

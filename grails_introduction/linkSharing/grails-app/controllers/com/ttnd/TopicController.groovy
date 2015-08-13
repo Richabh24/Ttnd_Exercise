@@ -46,16 +46,17 @@ class TopicController {
         redirect controller: 'user', action: 'dashboard'
     }
 
-    def subscriptionList() {
+    def fetchsubscriptionList() {
         User user = session.user
         UserDashboardDTO dashboardDTO = topicService.subsciptionList(user, params)
         [data: dashboardDTO]
     }
+    // not in use   -   richa
     def trendingTopicList() {
         User user = session.user
         UserDashboardDTO dashboardDTO = topicService.trendingTopicList(user, params)
         [data: dashboardDTO]
-        render view: "subscriptionList"
+        render view: "fetchsubscriptionList"
     }
 
     def deleteTopic() {

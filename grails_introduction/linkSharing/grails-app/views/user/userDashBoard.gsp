@@ -65,7 +65,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h3 class="panel-title">Subscriptions
                         <g:link style="float: right" controller="topic"
-                                action="subscriptionList">view all</g:link></h3></div>
+                                action="fetchsubscriptionList">view all</g:link></h3></div>
 
                     <div class="panel-body">
                         <g:render template="/layouts/topic"
@@ -81,8 +81,8 @@
                 <div class="panel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading"><h3 class="panel-title">Trending Topics
-                            <g:link style="float: right" controller="topic"
-                                    action="trendingTopicList">view all</g:link></h3></div>
+                            %{--<g:link style="float: right" controller="topic"
+                                    action="trendingTopicList">view all</g:link>--}%</h3></div>
 
                         <div class="panel-body">
                             <g:render template="/layouts/topic"
