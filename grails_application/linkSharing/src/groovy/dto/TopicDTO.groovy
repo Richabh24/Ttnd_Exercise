@@ -10,6 +10,7 @@ class TopicDTO {
     Integer resourceCount = 0
     List<Resource> resources
     List<Topic> subscriptions
+    Integer subscriptionCount = 0
 
     TopicDTO(Map topicDTOMap){
         this.users=topicDTOMap.users
@@ -17,6 +18,8 @@ class TopicDTO {
         this.resources=topicDTOMap.resources
         this.subscriptions =topicDTOMap.subscriptions
         this.resourceCount=topicDTOMap.resourceCount
+        this.subscriptionCount=topicDTOMap.subscriptionCount
+
     }
 }
 

@@ -53,6 +53,15 @@ class TopicService {
         Integer resourceCount = 0
         resourceCount = Resource.findAllByTopicInList(topiclist).size()
         List<Resource> resources = resourcesList(topiclist, params)
+        for (User u :users){
+            Integer subscriptionCount = Subscription.createCriteria().count(){
+
+                eq("user",u)
+            }
+
+            u.subcribetotalCount =subscriptionCount
+
+        }
 
         [topic: topic, users: users, resources: resources, resourceCount: resourceCount, subscriptions: subscriptions]
     }

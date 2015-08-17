@@ -11,7 +11,7 @@
 </div>
                 <div class="userPost" >
                     <h2>${user.fullName} @${user.username}</h2>
-                    <p>Subscriptions (  %{--${user.subcriptionCount}  --}%  )     Topics  ( ${user.topics.size()} )</p>
+                    <p>Subscriptions (  ${user.subcribetotalCount}   )     Topics  ( ${user.topics.size()} )</p>
 
                 </div>
 

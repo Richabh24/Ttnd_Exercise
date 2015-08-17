@@ -36,8 +36,7 @@ class UserController {
         if (user) {
 
 
-
-            render view: 'dashboard1', model: [data: userService.inbox(user)]
+            render view: 'userDashBoard', model: [data: userService.inbox(user)]
         }
         else{
             redirect controller: 'login', action: 'index'
