@@ -1,6 +1,44 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+
+    <script>
+
+        $(function(){
+            $('.rating-select .btn').on('mouseover', function(){
+                $(this).removeClass('btn-default').addClass('btn-warning');
+                $(this).prevAll().removeClass('btn-default').addClass('btn-warning');
+                $(this).nextAll().removeClass('btn-warning').addClass('btn-default');
+            });
+
+            $('.rating-select').on('mouseleave', function(){
+                active = $(this).parent().find('.selected');
+                if(active.length) {
+                    active.removeClass('btn-default').addClass('btn-warning');
+                    active.prevAll().removeClass('btn-default').addClass('btn-warning');
+                    active.nextAll().removeClass('btn-warning').addClass('btn-default');
+                } else {
+                    $(this).find('.btn').removeClass('btn-warning').addClass('btn-default');
+                }
+            });
+            $('.rating-select .btn').click(function(){
+                if($(this).hasClass('selected')) {
+                    var rating = $(this).index()+1
+                    var resid =${data.inbox.id}
+var user =${data.inbox.createdBy.id}
+                    <g:remoteFunction controller="topic" action="saveResourceRating" params="'resid='+resid+'&rating='+rating+'&createdBy='+user"/>
+
+                     /*$('.rating-select .selected').removeClass('selected');
+                     */
+                } else {
+                    $('.rating-select .selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+        });
+
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <asset:javascript src="application.js"/>
     <g:javascript library="jquery"/>
@@ -8,6 +46,8 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap.min.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'dashboard-look.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'popup-lookup.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-dialog.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'font-awesome.min.css')}">
     <style>
     .multi-columns-row .col-xs-6 {
         margin-bottom: 30px;
@@ -18,26 +58,37 @@
 <body>
 <div class="container">
     <div class="col-md-6 col-lg-6">
-<br><br>            <div class="col-md-12 col-lg-12">
+        <br><br>
 
-        <div class="row clearfix">
+        <div class="col-md-12 col-lg-12">
+
+            <div class="row clearfix">
 
                 <div class="panel-group">
-                <div class="panel panel-primary">
-                    <div class="panel-heading"><h3 class="panel-title">Resources
-                    </h3></div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><h3 class="panel-title">Resources
 
-                    <div class="panel-body">
 
-                        <g:render template="/layouts/resource"
-                                  model="${[items: data.inbox, rating: data.topicCount]}"/>
+                        </h3></div>
 
-                    </div></div></div>
-</div>
+                        <div class="panel-body">
+
+                            <g:render template="/layouts/resource"
+                                      model="${[items: data.inbox, rating: data.topicCount]}"/>
+                            <div class="rating-select" align="right">
+                                <div class="btn btn-default btn-sm" id="d1"><span class="glyphicon glyphicon-star-empty"></span></div>
+                                <div class="btn btn-default btn-sm" id ="d2"><span class="glyphicon glyphicon-star-empty"></span></div>
+                                <div class="btn btn-default btn-sm" id="d3"><span class="glyphicon glyphicon-star-empty"></span></div>
+                                <div class="btn btn-default btn-sm" id ="d4"><span class="glyphicon glyphicon-star-empty"></span></div>
+                                <div class="btn btn-default btn-sm" id ="d5"><span class="glyphicon glyphicon-star-empty"></span></div>
+                            </div>
+
+                        </div></div></div>
+            </div>
         </div></div>
 
     <div class="col-md-6 col-lg-6">
-        </br></br>
+    </br></br>
         <div class="row clearfix">
             <div class="panel-group">
                 <div class="panel panel-primary">
@@ -46,12 +97,13 @@
 
                     <div class="panel-body">
 
-                        <g:render template="/layouts/topic" model="${[topicList: data.trendings,subscribe:false]}"/>
 
+                        <g:render template="/layouts/topic" model="${[topicList: data.trendings, subscribe: false]}"/>
 
                     </div></div></div>
 
         </div></div>
+
     <div class=" popup-class popup-wrapper " id="linkPopUp">
         <div class="popup-container">
             <div class="panel-group">
@@ -65,12 +117,18 @@
                             <div class ="col-md-12 col-lg-12">
 
                               <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Title<span class="text-danger">*</span> :</label></div>
-                                                      <div class="col-md-8"> <g:textField name="title" class="form-control" placeholder="Title*"/></div></div>
+                                                      <div class="col-md-8"> <g:textField name="title"
+                                                                                          class="form-control"
+                                                                                          placeholder="Title*"/></div></div>
                             </br>
 
 
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Link<span class="text-danger">*</span> :</label></div>
-                                <div class="col-md-8"> <g:textField name="url" class="form-control" placeholder="Link*"/></div></div>
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Link<span
+                                        class="text-danger">*</span> :</label></div>
+
+                                <div class="col-md-8"><g:textField name="url" class="form-control"
+                                                                   placeholder="Link*"/></div></div>
                             </br>
                             <div class="row"><div class="col-md-4"><label class="text-info"
                                                                           style="font-size: medium">Description<span
@@ -102,6 +160,7 @@
             <a class="popup-close" href="#closed">X</a>
         </div>
     </div>
+
     <div class=" popup-class popup-wrapper " id="documentPopUp">
         <div class="popup-container">
             <div class="panel-group">
@@ -113,28 +172,38 @@
                         <g:uploadForm enctype="multipart/form-data" controller="topic" action="createDocResource"
                                       class="form-signin2" name="userForm">
 
-
                             <div class ="col-md-12 col-lg-12">
                               <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Title<span class="text-danger">*</span> :</label></div>
-                                                      <div class="col-md-8"> <g:textField name="title" class="form-control" placeholder="Title*"/></div></div>
+                                                      <div class="col-md-8"> <g:textField name="title"
+                                                                                          class="form-control"
+                                                                                          placeholder="Title*"/></div></div>
                             </br>
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Document<span class="text-danger">*</span> :</label></div>
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Document<span
+                                        class="text-danger">*</span> :</label></div>
+
                                 <div class="col-md-8">
 
-                                    <input type="file"  name="file" class="form-control" placeholder="Document"/>
-
-
+                                    <input type="file" name="file" class="form-control" placeholder="Document"/>
 
                                 </div></div>
                             </br>
 
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Description<span class="text-danger">*</span> :</label></div>
-                                <div class="col-md-8">  <g:textArea name="description" class="form-control" placeholder="Description*"/></div></div>
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Description<span
+                                        class="text-danger">*</span> :</label></div>
+
+                                <div class="col-md-8"><g:textArea name="description" class="form-control"
+                                                                  placeholder="Description*"/></div></div>
                             </br>
 
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Topic<span class="text-danger">*</span> :</label></div>
-                                <div class="col-md-8"> <g:select name="topic" from="${data.subscriptions}" optionKey="id" optionValue="name"
-                                                                 title="Select a Topic" class="form-control"/>
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Topic<span
+                                        class="text-danger">*</span> :</label></div>
+
+                                <div class="col-md-8"><g:select name="topic" from="${data.subscriptions}" optionKey="id"
+                                                                optionValue="name"
+                                                                title="Select a Topic" class="form-control"/>
                                 </div></div>
 
 
@@ -150,6 +219,7 @@
             <a class="popup-close" href="#closed">X</a>
         </div>
     </div>
+
     <div class=" popup-class popup-wrapper " id="topicpopup">
         <div class="popup-container">
             <div class="panel-group">
@@ -166,16 +236,25 @@
 
                             <div class ="col-md-12 col-lg-12">
                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Topic Name <span class="text-danger">*</span> :</label></div>
-                             <div class="col-md-8"> <g:textField name="name" class="form-control" placeholder="Topic Name"/></div></div>
+                             <div class="col-md-8"> <g:textField name="name" class="form-control"
+                                                                 placeholder="Topic Name"/></div></div>
                             </br>
 
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Seriousness<span class="text-danger">*</span> :</label></div>
-                                <div class="col-md-8"> <g:select name="seriousness" class="form-control"
-                                                                 from="${com.ttnd.Subscription.SeriousnessValue}"/></div></div>
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Seriousness<span
+                                        class="text-danger">*</span> :</label></div>
+
+                                <div class="col-md-8"><g:select name="seriousness" class="form-control"
+                                                                from="${com.ttnd.Subscription.SeriousnessValue}"/></div>
+                            </div>
                             <br/>
-                            <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Visibility<span class="text-danger">*</span> :</label></div>
-                                <div class="col-md-8"> <g:select name="visibility" class="form-control"
-                                                                 from="${com.ttnd.Topic.VisibilityEnum}"/></div></div>
+
+                            <div class="row"><div class="col-md-4"><label class="text-info"
+                                                                          style="font-size: medium">Visibility<span
+                                        class="text-danger">*</span> :</label></div>
+
+                                <div class="col-md-8"><g:select name="visibility" class="form-control"
+                                                                from="${com.ttnd.Topic.VisibilityEnum}"/></div></div>
                             <br/>
 
 
@@ -205,7 +284,8 @@
 
                             <div class ="col-md-12 col-lg-12">
                              <div class="row"  ><div class="col-md-4"><label class="text-info" style="font-size: medium" >Email<span class="text-danger">*</span> :</label></div>
-                             <div class="col-md-8"> <g:textField name="receiverEmail" class="form-control" placeholder="Email*"/></div></div>
+                             <div class="col-md-8"> <g:textField name="receiverEmail" class="form-control"
+                                                                 placeholder="Email*"/></div></div>
                             </br>
 
                             <div class="row"><div class="col-md-4"><label class="text-info"
@@ -230,7 +310,6 @@
             <a class="popup-close" href="#closed">X</a>
         </div>
     </div>
-
 
 </div>
 

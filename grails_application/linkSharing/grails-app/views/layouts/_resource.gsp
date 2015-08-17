@@ -17,6 +17,7 @@
                     <div class="row">
                         <div class="col-md-8 col-lg-8 ">
                             <div class="row pull-left">
+
                                 <h4>${row.createdBy.fullName}</h4>
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                             </div>
 
                             <div class="col-md-3 col-lg-3 ">
-                                <g:link controller="topic" action="showPost" params="[resId: row.id]">View Post</g:link>
+                                <g:link controller="topic" action="viewPost" params="[resId: row.id]">View Post</g:link>
                             </div>
                         </div></g:if>
                     </div>
@@ -78,5 +79,8 @@
 
 
 
-
 </g:each>
+
+
+
+

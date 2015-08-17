@@ -283,7 +283,7 @@ class TopicService {
     }
 
 
-    def showPost(Map params) {
+    def viewPost(Map params) {
         Resource resource = Resource.load(params.resId)
         Integer sumRating = 0
         if (resource.resourceRatings) {

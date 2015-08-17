@@ -146,6 +146,9 @@ class TopicController {
         redirect controller: 'user', action: 'dashboard'
     }
 
+
+
+
     def markAsRead() {
         println params
         resourceService.markRead(params)
@@ -170,6 +173,20 @@ class TopicController {
 
             topicService.editTopic(params, session.user)
             render "<h2><b><p>Topic successfully updated!</p></b></h2>"
+
+    }
+
+    def saveResourceRating(params){
+        println params.properties
+        User u =session.user
+        Resource r = Resource.load(params.resid)
+        User user = User.load(params.createdBy)
+
+
+        ResourceRating resourceRating1 = new ResourceRating(user: u, resource: r, score: params.rating)
+        resourceRating1.save(flush: true, failOnError: true)
+        r.addToResourceRatings(resourceRating1)
+        r.merge(flush: true)
 
     }
     def downloadFile() {
@@ -201,8 +218,8 @@ class TopicController {
     }
 
 
-    def showPost() {
-        UserDashboardDTO dashboardDTO = topicService.showPost(params)
+    def viewPost() {
+        UserDashboardDTO dashboardDTO = topicService.viewPost(params)
         [data: dashboardDTO]
     }
 
