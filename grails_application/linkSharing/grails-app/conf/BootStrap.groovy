@@ -53,7 +53,7 @@ class BootStrap {
                     ,createdBy: u)
             lr.title="titleResource${j}"
             lr.save(failOnError: true)
-            createRatings(u,lr,null);
+          //  createRatings(u,lr,null);
             t.addToResources(lr)
 
         }
@@ -63,7 +63,7 @@ class BootStrap {
             dr.title="titleDocResource${j}"
 
             dr.save(failOnError: true)
-            createRatings(u,null,dr);
+           // createRatings(u,null,dr);
 
             t.addToResources(dr)
 

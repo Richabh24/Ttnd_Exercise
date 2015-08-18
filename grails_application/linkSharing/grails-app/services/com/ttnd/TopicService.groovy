@@ -283,13 +283,15 @@ class TopicService {
     }
 
 
-    def viewPost(Map params) {
+    def viewPost(Map params,User user) {
         Resource resource = Resource.load(params.resId)
-        Integer sumRating = 0
+        User user1=user
+
+        Integer avgRating = 0
         if (resource.resourceRatings) {
-            sumRating = resource.resourceRatings.score.sum() / resource.resourceRatings.size()
-            println "sumRating" + sumRating
+            avgRating = resource.resourceRatings.score.sum() / resource.resourceRatings.size()
+            println "resource sum "+resource.resourceRatings.score.sum()+"resourceRatings.size()"+resource.resourceRatings.size()+"sumRating" + avgRating
         }
-        [inbox: resource as List, trendings: userService.gettrendings(), topicCount: sumRating]
+        [inbox: resource as List, trendings: userService.gettrendings(), topicCount: avgRating,user:user1]
     }
 }

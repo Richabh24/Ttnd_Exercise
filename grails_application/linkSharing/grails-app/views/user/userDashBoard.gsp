@@ -14,6 +14,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="${resource(dir: 'js', file: 'jquery.raty.js')}"></script>
 
     <script src="js/star-rating.js" type="text/javascript"></script>
     <meta name="layout" content="dashboard">
@@ -22,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'popup-lookup.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-dialog.css')}">
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'font-awesome.min.css')}">
+    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'jquery.raty.css')}">
 
     <style>
     .multi-columns-row .col-xs-6 {

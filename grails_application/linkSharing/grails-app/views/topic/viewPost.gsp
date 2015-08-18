@@ -3,6 +3,12 @@
 <head>
 
     <script>
+        window.onload=test;
+function test() {
+    $(document).ready(function () {
+
+    });
+}
 
         $(function(){
             $('.rating-select .btn').on('mouseover', function(){
@@ -24,8 +30,9 @@
             $('.rating-select .btn').click(function(){
                 if($(this).hasClass('selected')) {
                     var rating = $(this).index()+1
+                    alert(rating)
                     var resid =${data.inbox.id}
-var user =${data.inbox.createdBy.id}
+                     var user =${data.inbox.createdBy.id}
                     <g:remoteFunction controller="topic" action="saveResourceRating" params="'resid='+resid+'&rating='+rating+'&createdBy='+user"/>
 
                      /*$('.rating-select .selected').removeClass('selected');
@@ -75,13 +82,32 @@ var user =${data.inbox.createdBy.id}
 
                             <g:render template="/layouts/resource"
                                       model="${[items: data.inbox, rating: data.topicCount]}"/>
-                            <div class="rating-select" align="right">
+                        <div class="rating-select" align="right">
+
+                            <g:if test="${data.topicCount.toString() >'0' }">
+
+                                <% def count=5 %>
+
+                                <g:each in="${1..count}" var="c" >
+                                    <g:if test="${data.topicCount.toString() >'0' && c.toString()<=data.topicCount.toString()  }">
+                                        <div class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-star-empty"></span></div>
+                                    </g:if>
+                                    <g:else>
+                                        <div class="btn btn-default btn-sm"><span class="glyphicon glyphicon-star-empty"></span></div>
+
+                                    </g:else>
+                                </g:each>
+
+</g:if><g:else>
                                 <div class="btn btn-default btn-sm" id="d1"><span class="glyphicon glyphicon-star-empty"></span></div>
                                 <div class="btn btn-default btn-sm" id ="d2"><span class="glyphicon glyphicon-star-empty"></span></div>
                                 <div class="btn btn-default btn-sm" id="d3"><span class="glyphicon glyphicon-star-empty"></span></div>
                                 <div class="btn btn-default btn-sm" id ="d4"><span class="glyphicon glyphicon-star-empty"></span></div>
                                 <div class="btn btn-default btn-sm" id ="d5"><span class="glyphicon glyphicon-star-empty"></span></div>
-                            </div>
+
+                            </g:else>
+                        </div>
+
 
                         </div></div></div>
             </div>
@@ -98,7 +124,9 @@ var user =${data.inbox.createdBy.id}
                     <div class="panel-body">
 
 
+
                         <g:render template="/layouts/topic" model="${[topicList: data.trendings, subscribe: false]}"/>
+
 
                     </div></div></div>
 
@@ -257,9 +285,8 @@ var user =${data.inbox.createdBy.id}
                                                                 from="${com.ttnd.Topic.VisibilityEnum}"/></div></div>
                             <br/>
 
+                            <g:hiddenField name="createdById" value="${data.user.id}"/>
 
-
-                            <g:hiddenField name="createdById" value="${session.user.id}"/>
 
                             </br>
                             <div align="center">
@@ -312,6 +339,5 @@ var user =${data.inbox.createdBy.id}
     </div>
 
 </div>
-
 </body>
 </html>

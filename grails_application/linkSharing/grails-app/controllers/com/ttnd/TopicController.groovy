@@ -181,12 +181,17 @@ class TopicController {
         User u =session.user
         Resource r = Resource.load(params.resid)
         User user = User.load(params.createdBy)
+        ResourceRating resourceRating =ResourceRating.findByResourceAndUser(r,user)
+        if(resourceRating){
 
+            resourceRating.score= Integer.parseInt(params.rating)
+            println resourceRating.properties
+            resourceRating.save(flush: true, failOnError: true)
 
-        ResourceRating resourceRating1 = new ResourceRating(user: u, resource: r, score: params.rating)
-        resourceRating1.save(flush: true, failOnError: true)
-        r.addToResourceRatings(resourceRating1)
-        r.merge(flush: true)
+        }else{ ResourceRating resourceRating1 = new ResourceRating(user: u, resource: r, score: params.rating)
+            resourceRating1.save(flush: true, failOnError: true)
+            r.addToResourceRatings(resourceRating1)
+            r.merge(flush: true)}
 
     }
     def downloadFile() {
@@ -219,7 +224,11 @@ class TopicController {
 
 
     def viewPost() {
-        UserDashboardDTO dashboardDTO = topicService.viewPost(params)
+
+        User user = User.findById(session.user.id)
+        println user.properties
+
+        UserDashboardDTO dashboardDTO = topicService.viewPost(params,user)
         [data: dashboardDTO]
     }
 
