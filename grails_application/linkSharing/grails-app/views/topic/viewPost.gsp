@@ -3,12 +3,7 @@
 <head>
 
     <script>
-        window.onload=test;
-function test() {
-    $(document).ready(function () {
 
-    });
-}
 
         $(function(){
             $('.rating-select .btn').on('mouseover', function(){
@@ -30,7 +25,6 @@ function test() {
             $('.rating-select .btn').click(function(){
                 if($(this).hasClass('selected')) {
                     var rating = $(this).index()+1
-                    alert(rating)
                     var resid =${data.inbox.id}
                      var user =${data.inbox.createdBy.id}
                     <g:remoteFunction controller="topic" action="saveResourceRating" params="'resid='+resid+'&rating='+rating+'&createdBy='+user"/>

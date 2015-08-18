@@ -111,7 +111,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Inbox
                     <input type="text" class="form-control" id="inputSuccess2" placeholder="Search"
-                           style="height: 22px;width: 154px;float: right"/></div>
+                           style="height: 26px;width: 154px;float: right"/></div>
 
                 <div class="panel-body">
                     <g:render template="/layouts/resource" model="${[items: data.inbox]}"/>
